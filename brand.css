@@ -1,0 +1,44 @@
+/* ============================================================
+   DESIGNER HOURS — LOOK & FEEL  (edit this file to make it yours)
+   Every color and font is defined ONCE, right here.
+   Change a value below and the whole app + PDFs follow.
+   ============================================================ */
+
+/* 1) FONTS — swap this one line for any Google Fonts link (https://fonts.google.com) */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Montserrat+Alternates:wght@400;500;600;700&display=swap");
+
+:root{
+  /* 2) FONT NAMES — must match the fonts loaded above */
+  --font-heading: 'Montserrat', system-ui, sans-serif;                      /* titles, numbers, buttons */
+  --font-body:    'Montserrat', system-ui, sans-serif;                      /* app text */
+  --font-doc:     'Montserrat Alternates', 'Montserrat', sans-serif;        /* estimate / invoice / statement body text */
+
+  /* 3) COLORS — one line each */
+  --accent:       #00939C;   /* main brand color: highlights, tags, links */
+  --accent-btn:   #007F87;   /* call-to-action buttons (darker so white text is readable) */
+  --accent-deep:  #05494E;   /* dark brand shade: totals, button text */
+  --accent-tint:  #E0F4F5;   /* very light brand shade: hover and chips */
+  --on-accent:    #FFFFFF;   /* text that sits on the brand color */
+
+  --ink:          #0A0A0A;   /* headings */
+  --text:         #2A2A2A;   /* body text */
+  --mute:         #666666;   /* secondary text */
+  --soft:         #888888;   /* labels, hints */
+  --faint:        #B5B5B5;   /* placeholders */
+
+  --bg:           #FFFFFF;   /* page background */
+  --surface:      #F7F7F7;   /* cards and panels */
+  --surface-2:    #FBFBFB;   /* alternate panel */
+  --line:         #E8E8E8;   /* borders and dividers */
+  --line-soft:    #EEEEEE;   /* faint dividers */
+  --line-strong:  #DCDCDC;   /* stronger borders */
+
+  --danger:       #B3261E;   --danger-tint: #FDE8E7;   /* delete, errors, overdue */
+  --ok:           #1B7F4B;   --ok-tint:     #E6F5EC;   /* paid, success */
+  --warn:         #9A6200;   --warn-tint:   #FFF3D6;   /* attention */
+  --partial:      #C98A1B;                              /* "partly paid" tag */
+  --live:         #5FF0C8;   /* running-timer dot */
+  --live-link:    #7FF0E0;   /* link color on the dark toast */
+
+  --r: 14px;                 /* corner roundness */
+}

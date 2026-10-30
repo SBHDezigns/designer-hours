@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Designer Hours">
+<meta name="author" content="SBHdezigns (https://sbhdezigns.com)">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<title>Designer Hours</title>
+<link rel="stylesheet" href="brand.css">
+<script src="brand.js"></script>
+<style>
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 var(--font-body)}
+h1,h2,h3{font-family:var(--font-heading);color:var(--ink);margin:0}
+a{color:var(--accent-btn)}
+button{font:inherit;cursor:pointer}
+[hidden]{display:none!important}
+
+/* header */
+.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:28px;padding:10px 28px}
+.brand{display:flex;align-items:center;min-height:44px}
+.brand img{height:48px;display:block}
+.top nav{display:flex;gap:4px;flex:1;flex-wrap:wrap}
+.top nav a{padding:8px 14px;border-radius:10px;text-decoration:none;color:var(--mute);font-weight:600;font-size:14px}
+.top nav a:hover{background:var(--surface)}
+.top nav a i{display:none;font-style:normal;font-size:20px;line-height:1}
+.top nav a.on{background:var(--surface);color:var(--accent-deep)}
+.sync{font-size:12px;font-weight:600;color:var(--soft);white-space:nowrap}
+.sync.saved{color:var(--ok)}.sync.offline,.sync.conflict{color:var(--danger)}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.ico{display:block;flex:none}
+.pill{display:flex;align-items:center;gap:8px;background:var(--accent-deep);color:var(--on-accent);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;text-decoration:none;border:0}
+.pill .dot{background:var(--live)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.35}}
+
+main{max-width:1180px;margin:0 auto;padding:32px 28px 80px}
+.back{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding-right:8px;color:var(--mute);text-decoration:none;font-weight:600;font-size:14px;margin-bottom:10px}
+.back:hover{color:var(--accent-btn)}
+.sp{flex:1}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.muted{color:var(--mute)} .small{font-size:13px}
+
+/* controls */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--accent-deep);border-radius:10px;padding:9px 16px;font-weight:700;font-size:14px;transition:.15s}
+.btn:hover{border-color:var(--accent);color:var(--accent-btn)}
+.btn.primary{background:var(--accent-btn);border-color:var(--accent-btn);color:var(--on-accent)}
+.btn.primary:hover{background:var(--accent-deep);border-color:var(--accent-deep);color:var(--on-accent)}
+.btn.danger{background:var(--accent-deep);border-color:var(--accent-deep);color:var(--on-accent)}
+.btn.danger:hover{background:var(--ink)}
+.btn.destroy{background:var(--danger);border-color:var(--danger);color:var(--on-accent)}
+.modal.confirm p{margin:6px 0 4px;line-height:1.5}.modal.confirm .acts{margin-top:22px}
+.btn.big{padding:14px 22px;font-size:16px;border-radius:12px}
+.btn:disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
+.link{background:none;border:0;color:var(--soft);text-decoration:underline;padding:4px 0;font-size:13px}
+.link:hover{color:var(--danger)}
+label{display:block;font-size:12.5px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.03em;margin:0 0 12px}
+label small{text-transform:none;font-weight:500;letter-spacing:0}
+input,select,textarea{width:100%;margin-top:5px;font:inherit;font-size:16px;color:var(--text);background:var(--bg);border:1.5px solid var(--line-strong);border-radius:10px;padding:10px 12px;text-transform:none;letter-spacing:0;font-weight:500}
+input:focus,select:focus,textarea:focus{outline:3px solid color-mix(in srgb,var(--accent) 22%,transparent);border-color:var(--accent)}
+input[type=checkbox],input[type=radio]{width:auto;margin:0;accent-color:var(--accent-btn)}
+textarea{resize:vertical;min-height:70px}
+.inl{display:flex;align-items:center;gap:10px;text-transform:none;font-size:14px;font-weight:600;color:var(--text);letter-spacing:0;margin:0 0 10px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* cards */
+.card{background:var(--surface);border-radius:var(--r);padding:22px 24px}
+.card h3{font-size:12.5px;text-transform:uppercase;color:var(--soft);letter-spacing:.04em;margin-bottom:12px}
+.cols{display:grid;grid-template-columns:1.25fr 1fr;gap:20px}
+.chip{display:inline-block;border-radius:99px;padding:3px 11px;font-size:12px;font-weight:700;background:var(--bg);border:1px solid var(--line);color:var(--mute);white-space:nowrap}
+.chip.ok{background:var(--ok-tint);border-color:var(--ok-tint);color:var(--ok)}
+.chip.part{background:var(--warn-tint);border-color:var(--warn-tint);color:var(--warn)}
+.chip.bad{background:var(--danger-tint);border-color:var(--danger-tint);color:var(--danger)}
+.chip.teal{background:var(--accent-tint);border-color:var(--accent-tint);color:var(--accent-deep)}
+
+/* home */
+.hero{text-align:center;padding:30px 0 10px}
+.hero h1{font-size:44px;font-weight:800;letter-spacing:-.02em}
+.hero p{color:var(--mute);margin:6px 0 22px}
+.search{display:flex;gap:10px;max-width:640px;margin:0 auto}
+.search input{margin:0;font-size:17px;padding:14px 18px;border-radius:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:30px 0 8px}
+.stat .v{font:800 30px var(--font-heading);color:var(--accent-deep)} .stat .l{font-size:12px;font-weight:700;color:var(--soft);text-transform:uppercase}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:22px}
+.co{background:var(--surface);border-radius:var(--r);padding:20px 22px;cursor:pointer;border:2px solid transparent;transition:.15s;text-align:left;font:inherit;color:inherit;display:block;width:100%}
+.co:hover{border-color:var(--accent);transform:translateY(-2px)}
+.co b{font:700 18px var(--font-heading);color:var(--ink);display:block}
+.co .meta{color:var(--mute);font-size:13px;margin:2px 0 10px}
+.co.add{background:var(--bg);border:2px dashed var(--accent);color:var(--accent-btn);display:flex;align-items:center;justify-content:center;min-height:110px;font-weight:700;font-size:16px}
+#foot{text-align:center;color:var(--soft);font-size:12px;padding:0 14px 28px;margin-top:-40px}
+.empty{color:var(--soft);text-align:center;padding:40px 0}
+
+/* company page */
+.cohead{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:22px}
+.cohead h1{font-size:38px;font-weight:800;letter-spacing:-.02em}
+.stat .s{font-size:12px;color:var(--mute);margin-top:4px;font-weight:500;line-height:1.35}
+.cofirst{flex:1 1 300px;min-width:0}.cohd{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.cohd .btn{min-height:44px}
+.cohead .ratebox{margin-left:auto}
+.cohead .info{display:flex;gap:16px;flex-wrap:wrap;color:var(--mute);margin-top:4px;font-size:14px}
+.ratebox{display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:12px;padding:8px 14px;font-weight:700;color:var(--accent-deep)}
+.ratebox input{width:90px;margin:0;padding:8px;font-weight:700;min-height:44px}
+.cl{display:inline-flex;align-items:center;min-height:44px}
+.tk .tkbtns{display:flex;gap:12px;flex-wrap:wrap}
+.tk .reveal{margin-top:14px;display:flex;gap:12px;align-items:flex-end}
+.tk .reveal label{flex:1;margin:0}
+.tkrun{margin-bottom:14px;color:var(--mute);font-size:14px}
+.tkrun .big{font:800 44px var(--font-heading);color:var(--accent-deep);letter-spacing:-.01em;line-height:1.1;margin-top:2px}
+.tkhelp{font-size:13px;color:var(--soft);margin:10px 0 0}
+.sect{display:flex;align-items:center;gap:12px;margin:38px 0 14px}
+.sect h2{font-size:22px;font-weight:800}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+table{border-collapse:collapse;width:100%}
+.tbl th{background:var(--surface);text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--soft);padding:11px 14px;white-space:nowrap}
+.tbl td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top;font-size:14px}
+.tbl tr[data-a]{cursor:pointer} .tbl tr[data-a]:hover td{background:var(--surface-2)}
+.tbl .notes{max-width:440px;white-space:pre-wrap;color:var(--text)}
+.tbl .r,.r{text-align:right;white-space:nowrap}
+.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.filters label{margin:0}
+.filters label{min-width:0}.filters input,.filters select{width:100%;min-width:0;max-width:100%}
+input[type=date],input[type=datetime-local]{display:block;min-width:0;max-width:100%;-webkit-appearance:none;appearance:none;min-height:48px}
+.tabs{display:flex;gap:6px}
+.tabs button{border:0;background:var(--surface);min-height:44px;padding:8px 18px;border-radius:99px;font-weight:700;color:var(--mute)}
+.tabs button.on{background:var(--accent-deep);color:var(--on-accent)}
+
+/* modal + toast */
+.scrim{position:fixed;inset:0;background:rgba(5,73,78,.45);display:flex;align-items:flex-start;justify-content:center;padding:6vh 16px;z-index:50;overflow:auto}
+.modal{background:var(--bg);border-radius:18px;padding:28px;width:100%;max-width:520px;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+.modal h2{font-size:24px;margin-bottom:18px;padding-right:44px}
+.modal .acts{display:flex;gap:10px;justify-content:flex-end;margin-top:8px;align-items:center}
+.pickrow{display:block;width:100%;text-align:left;background:var(--surface);border:0;border-radius:10px;padding:12px 16px;margin-top:8px;font-weight:700;color:var(--accent-deep)}
+.pickrow:hover{background:var(--accent-tint)}
+#toast{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100vw - 24px);background:var(--accent-deep);color:var(--on-accent);padding:12px 18px;border-radius:12px;font-weight:600;font-size:14px;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.25);display:flex;gap:14px;align-items:center}
+.ferr{color:var(--danger);font-weight:600;font-size:14px;margin:6px 0 10px}
+[aria-invalid=true]{border-color:var(--danger)!important;outline:2px solid #b3261e33}
+#toast button{background:none;border:0;color:var(--live-link);font:700 14px var(--font-heading);text-decoration:underline;min-height:44px;padding:0 4px}
+.ibtn{display:inline-grid;place-items:center;width:48px;height:48px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--accent-deep);padding:0}
+.ibtn:hover{border-color:var(--accent);color:var(--accent-btn)}
+.ibtn.primary{background:var(--accent-btn);border-color:var(--accent-btn);color:var(--on-accent)}
+.ibtn.primary:hover{background:var(--accent-deep);border-color:var(--accent-deep)}
+.xbtn{position:absolute;top:10px;right:10px;width:44px;height:44px;border:0;background:none;color:var(--mute);display:grid;place-items:center}
+.modal{position:relative}
+.lcards{display:none}
+.lc{display:block;width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;font:inherit;color:inherit}
+.lc .top2{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.lc .d{font-weight:700;color:var(--ink)}.lc .tm{color:var(--mute);font-size:13px}
+.lc .nt{margin-top:8px;font-size:14px;white-space:pre-wrap}
+.lc .big{font:800 17px var(--font-heading);color:var(--accent-deep);white-space:nowrap}
+.pvhint{display:none;font-size:12.5px;color:var(--soft);text-align:center;margin:0 0 8px}
+#pvwrap{overflow-x:auto}
+
+/* editor */
+.edhead{position:sticky;top:69px;z-index:10;background:rgba(255,255,255,.96);padding:12px 0;display:flex;gap:14px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:22px}
+.edhead .t{font:800 20px var(--font-heading);color:var(--ink)}
+.hint{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--mute);align-items:center}
+.hint b{color:var(--accent-deep)}
+.mtog{display:none}
+.desk{}
+.editor{display:grid;grid-template-columns:400px 1fr;gap:28px;align-items:start}
+.fsec{background:var(--surface);border-radius:var(--r);padding:20px 22px;margin-bottom:16px}
+.fsec h3{font-size:12.5px;text-transform:uppercase;color:var(--accent-btn);letter-spacing:.05em;margin-bottom:14px}
+.stepr{display:flex;gap:6px;align-items:center;margin-bottom:8px}
+.stepr .n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:12px;display:grid;place-items:center}
+.stepr input{margin:0}
+.ib{flex:none;border:0;background:var(--bg);border-radius:10px;width:44px;height:44px;color:var(--mute);display:grid;place-items:center;padding:0}
+.ib:hover{color:var(--accent-btn)}
+.logsel{display:flex;gap:10px;align-items:flex-start;background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:6px;font-size:13px;text-transform:none;font-weight:500;color:var(--text);letter-spacing:0;cursor:pointer}
+.logsel input{margin-top:3px}
+.logsel .nt{color:var(--mute);display:block;font-size:12px}
+.modes label{background:var(--bg);border:2px solid transparent;border-radius:12px;padding:12px 14px;text-transform:none;color:var(--text);font-size:14px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;letter-spacing:0}
+.modes label:has(input:checked){border-color:var(--accent)}
+.modes label span small{display:block;color:var(--mute);font-weight:500;font-size:12.5px}
+.pay{display:flex;justify-content:space-between;gap:10px;background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:6px;font-size:13px;align-items:center}
+#pvwrap{min-width:0}
+#pv{transform-origin:top left;width:816px}
+
+/* ===== the document  ===== */
+.page{width:816px;min-height:1056px;background:var(--bg);padding:56px 72px 64px;color:var(--text);font-family:var(--font-doc);font-size:13px;line-height:1.5;box-shadow:0 2px 30px rgba(0,0,0,.12);border-radius:4px}
+.page *{text-transform:none}
+.dh{display:flex;justify-content:space-between;align-items:flex-start}
+.dlogo{width:96px;display:block}
+.dmeta{text-align:right;font-size:16px;color:var(--mute);line-height:1.35}
+.dmeta b{display:block;font:600 16px var(--font-heading);color:var(--mute)}
+.dmeta span{color:var(--soft);display:block}
+.dmeta .stamp{display:inline-block;margin-top:8px;background:var(--accent);color:var(--on-accent);font:700 11px var(--font-heading);letter-spacing:.08em;padding:5px 12px;border-radius:99px;text-transform:uppercase}
+.dmeta .stamp.part{background:var(--partial)}
+.dt{font:800 46px/1.08 var(--font-heading);color:var(--ink);margin:32px 0 10px;letter-spacing:-.01em;overflow-wrap:anywhere}
+.dsub{font-size:20px;color:var(--accent)}
+.dby{font-size:16px;color:var(--mute);margin-top:2px}
+.drule{border:0;height:2px;background:var(--line);margin:24px 0 8px}
+.dsec{display:flex;align-items:center;gap:14px;margin:28px 0 14px;color:var(--accent);font-weight:700;font-size:16px;text-transform:uppercase!important;break-after:avoid}
+.dsec i{flex:1;height:1px;background:var(--line)}
+.page p{margin:0 0 10px;white-space:pre-wrap}
+.dcards{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.dcards.one{grid-template-columns:1fr}
+.dcard{background:var(--surface);border-radius:14px;padding:22px 24px;break-inside:avoid}
+.dcard .l{font-size:12.5px;font-weight:700;color:var(--soft);text-transform:uppercase!important;letter-spacing:.01em}
+.dcard .v{font:800 28px/1.15 var(--font-heading);color:var(--accent-deep);margin-top:8px}
+.dcard .s{font:700 13px var(--font-heading);color:var(--accent-deep);margin-top:4px}
+.dcard .t{font-size:13px;color:var(--text);line-height:1.6}
+.dcard .t b{font-family:var(--font-heading);font-weight:700;color:var(--ink)}
+.dnote{margin-top:14px}
+.step{display:flex;gap:14px;align-items:flex-start;margin:0 0 14px;break-inside:avoid}
+.step b{flex:none;width:21px;height:21px;border-radius:50%;background:var(--accent);color:var(--on-accent);font:700 11.5px/21px var(--font-heading);text-align:center}
+.bul{display:flex;gap:12px;align-items:flex-start;margin:0 0 10px;break-inside:avoid}
+.bul i{flex:none;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:7px}
+.dtbl{width:100%;border-collapse:collapse}
+.dtbl th{text-align:left;font:700 11px var(--font-heading);text-transform:uppercase!important;color:var(--soft);letter-spacing:.03em;padding:8px 8px;border-bottom:2px solid var(--line)}
+.dtbl td{padding:11px 8px;border-bottom:1px solid var(--line-soft);vertical-align:top;white-space:pre-wrap}
+.dtbl tr{break-inside:avoid}
+.dtbl .r{text-align:right;white-space:nowrap}
+.dtbl .nw{white-space:nowrap}
+.dtot{margin:14px 0 0 auto;width:360px;break-inside:avoid}
+.dtot .pl{color:var(--accent-deep);font-size:12.5px;border-top:1px dashed var(--line)}
+.dtot .bd{margin-top:4px}
+.dtot div{display:flex;justify-content:space-between;padding:5px 8px;color:var(--mute)}
+.dtot .g{font:800 15px var(--font-heading);color:var(--accent-deep);border-top:2px solid var(--line);padding-top:10px;margin-top:4px}
+.ph{color:var(--faint);font-style:italic}
+.dpay{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line-soft);break-inside:avoid}
+
+/* ===== print ===== */
+@page{size:letter;margin:.5in 0}
+@media print{
+  body{background:var(--bg)}
+  .top,.edhead,#form,#toast,.scrim,.back{display:none!important}
+  main{padding:0;max-width:none}
+  .editor{display:block}
+  #pvwrap{width:816px}
+  #pv{zoom:1!important;transform:none!important}
+  .page{box-shadow:none;border-radius:0;min-height:0;padding:0 72px}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+@media (max-width:1000px){
+  :root{--navh:76px}
+  .editor{grid-template-columns:1fr}
+  .cols{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr;gap:10px}
+  .stats .card:last-child{display:none}
+  .stats .card{padding:14px}
+  .stat .v{font-size:20px}
+  .filters{grid-template-columns:1fr 1fr}
+  main{padding:14px 14px 24px}
+  #foot{padding:20px 14px calc(var(--navh) + env(safe-area-inset-bottom) + 24px);margin:0}
+  body.running #foot{padding-bottom:calc(var(--navh) + env(safe-area-inset-bottom) + 96px)}
+  .top{padding:6px 14px;gap:10px}
+  .brand img{height:40px}
+  .sync{font-size:11px;margin-left:auto}
+  .top nav{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:30;background:var(--bg);border-top:1px solid var(--line);box-shadow:0 -4px 20px rgba(0,0,0,.06);padding:8px 8px calc(10px + env(safe-area-inset-bottom));gap:4px;flex-wrap:nowrap;justify-content:space-around}
+  .top nav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:60px;padding:6px 2px;font-size:12px;text-align:center;line-height:1.1;border-radius:14px}
+  .top nav a i{display:block}
+  .pills{position:fixed;left:12px;right:12px;bottom:calc(var(--navh) + env(safe-area-inset-bottom) + 12px);z-index:25;flex-direction:column;gap:6px;width:auto}
+  .pill{justify-content:space-between;min-height:48px;padding:8px 16px;font-size:14px;box-shadow:0 8px 24px rgba(5,73,78,.35)}
+  #toast{bottom:calc(var(--navh) + env(safe-area-inset-bottom) + 20px)}
+  body.running #toast{bottom:calc(var(--navh) + env(safe-area-inset-bottom) + 84px)}
+  .hero h1{font-size:30px}
+  .hero{padding-top:4px}
+  .hero p{margin-bottom:14px}
+  .cohead h1{font-size:30px}
+  .docsect{flex-wrap:wrap;gap:8px}.docsect h2{width:100%}.docsect .btn{flex:1;padding-left:6px;padding-right:6px;white-space:nowrap}
+  .cohead{gap:12px}.cohead .ratebox{width:100%;justify-content:space-between;margin-left:0}.cohead .info{gap:2px 16px}
+  .cohead .info>span{white-space:normal}
+  .tk .tkbtns .btn{flex:1 1 100%}
+  .tk .reveal{flex-direction:column;align-items:stretch}
+  .tkrun .big{font-size:40px}
+  .sect{flex-wrap:wrap}
+  .btn{min-height:48px;padding:12px 16px}
+  .scrim{padding:3vh 10px}.modal{padding:22px 20px}
+  .g2{grid-template-columns:1fr}
+  .g2.keep{grid-template-columns:1fr 1fr}
+  .edhead{position:static;gap:8px;padding:4px 0 12px}
+  .edhead .t{font-size:18px;flex:1}
+  .edhead .sp{display:none}
+  .edhead .hint{width:100%;order:9}
+  .edhead .back{width:100%}
+  .mtog{display:flex;width:100%;gap:6px;order:8}
+  .mtog button{flex:1;border:0;background:var(--surface);min-height:48px;border-radius:12px;font-weight:700;color:var(--mute)}
+  .mtog button.on{background:var(--accent-deep);color:var(--on-accent)}
+  .editor:not(.pvon) #pvwrap{display:none}
+  .editor.pvon #form{display:none}
+  .pvhint{display:block}
+  .tbl.desk{display:none}
+  .lcards{display:block}
+  .logsel{min-height:48px;align-items:center}
+  .link{min-height:44px}
+  .modes label{min-height:56px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#/" title="Home"><img src="assets/logo.svg" alt="" id="brandimg"></a>
+  <nav id="nav">
+    <a href="#/" data-n="home"><i data-ic="co"></i><span>Companies</span></a>
+    <a href="#/logs" data-n="logs"><i data-ic="log"></i><span>Logs</span></a>
+    <a href="#/docs" data-n="docs"><i data-ic="doc"></i><span>Invoices</span></a>
+    <a href="#/settings" data-n="settings"><i data-ic="me"></i><span>My info</span></a>
+  </nav>
+  <span id="sync" class="sync"></span>
+  <div class="pills" id="pills"></div>
+</header>
+<main id="app"></main>
+<footer id="foot"></footer>
+<div id="modal"></div>
+<div id="toast" hidden></div>
+
+<script>
+/* ============ storage ============ */
+const $=(s,r=document)=>r.querySelector(s);
+const APP_VERSION='1.0.0', APP_DATE='Oct 30, 2026';
+const bizName=()=>(DB&&DB.me&&(DB.me.business||DB.me.name))||BRAND.appName;
+document.title=BRAND.appName;$('#brandimg').src=BRAND.logo;$('#brandimg').alt=BRAND.appName;document.querySelector('meta[name=apple-mobile-web-app-title]').content=BRAND.appName;
+const KEY='designer-hours-v1';
+let DB;
+const normalize=raw=>Object.assign({me:{name:'',business:'',email:'',phone:'',pay:''},companies:[],logs:[],docs:[],seq:{inv:1,est:1}},raw||{});
+function load(){
+  let raw=null; try{raw=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+  DB=normalize(raw);
+}
+/* Cloud sync: /api/data (behind Cloudflare Access). Falls back to this browser only when the API isn't there (e.g. opened as a file). */
+let REV=0, SYNC='local', dirty=false, pushing=false, pushT=null;
+function setSync(s){
+  SYNC=s;const e=document.getElementById('sync');if(!e)return;
+  e.innerHTML={local:'Saved on this device only',saving:'Saving…',saved:svg('check',14)+' Saved',offline:svg('alert',14)+' Not synced – retrying',conflict:svg('alert',14)+' Reload needed'}[s];
+  e.className='sync '+s;
+}
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}
+  if(SYNC!=='local'&&SYNC!=='conflict'){dirty=true;setSync('saving');clearTimeout(pushT);pushT=setTimeout(push,700)}
+}
+async function push(){
+  if(pushing){pushT=setTimeout(push,400);return}
+  pushing=true;dirty=false;
+  try{
+    const r=await fetch('/api/data',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify({baseRev:REV,data:DB})});
+    if(r.status===409){setSync('conflict');conflictModal();return}
+    if(!r.ok)throw new Error(r.status);
+    REV=(await r.json()).rev;setSync(dirty?'saving':'saved');
+  }catch(e){dirty=true;setSync('offline');pushT=setTimeout(push,8000)}
+  finally{pushing=false}
+}
+function conflictModal(){
+  openModal(`<h2>Changed on another device</h2><p>Your data was updated somewhere else (phone or another computer), so this screen is out of date. Reload to get the latest — your last few edits on this screen weren’t saved.</p><div class="acts"><button class="btn primary" onclick="location.reload()">Reload</button></div>`);
+}
+async function pull(){
+  const r=await fetch('/api/data',{cache:'no-store'});
+  if(!r.ok)throw new Error(r.status);
+  return r.json();
+}
+async function boot(){
+  $('#app').innerHTML='<p class="empty">Loading…</p>';
+  try{
+    const j=await pull();
+    REV=j.rev;
+    if(j.data){DB=normalize(j.data);try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}SYNC='saved'}
+    else{SYNC='saved';if(DB.companies.length||DB.logs.length||DB.docs.length){save()}}
+  }catch(e){SYNC='local'}
+  if(BRAND.demoMode&&!DB.companies.length&&!DB.logs.length)demoData();
+  setSync(SYNC);render();
+}
+document.addEventListener('visibilitychange',async()=>{
+  if(SYNC==='local'||SYNC==='conflict')return;
+  if(document.hidden){if(dirty&&!pushing)push();return}
+  if(dirty||pushing||$('#modal').innerHTML)return;
+  try{const j=await pull();if(j.data&&j.rev!==REV&&!dirty){REV=j.rev;DB=normalize(j.data);try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}render(true)}}catch(e){}
+});
+window.addEventListener('beforeunload',e=>{if(dirty||pushing){e.preventDefault();e.returnValue=''}});
+load();
+
+/* ============ helpers ============ */
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
+const pad=n=>String(n).padStart(2,'0');
+const sum=(a,f)=>a.reduce((s,x)=>s+f(x),0);
+const money=(n,d)=>{n=+n||0;const neg=n<0;n=Math.abs(n);const dec=d===undefined?(Number.isInteger(n)?0:2):d;return (neg?'-':'')+'$'+n.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})};
+const todayStr=()=>{const d=new Date();return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};
+const parseD=s=>{if(!s)return null;const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const fmtLong=s=>{const d=parseD(s);return d?d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}):''};
+const fmtShort=ms=>new Date(ms).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+const fmtTime=ms=>new Date(ms).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+const toLocalInput=ms=>{const d=new Date(ms);return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`};
+const fromLocalInput=v=>v?new Date(v).getTime():NaN;
+const fmtDur=ms=>{const m=Math.round(ms/60000);return `${Math.floor(m/60)}h ${pad(m%60)}m`};
+const fmtClock=ms=>{const s=Math.max(0,Math.floor(ms/1000));return `${Math.floor(s/3600)}:${pad(Math.floor(s%3600/60))}:${pad(s%60)}`};
+const sameDay=(a,b)=>new Date(a).toDateString()===new Date(b).toDateString();
+const nl2br=s=>esc(s);   // .page p uses white-space:pre-wrap
+const cap1=s=>s.charAt(0).toUpperCase()+s.slice(1);
+
+const IC={
+ co:'<path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16M14 9h5a1 1 0 0 1 1 1v11M3 21h18M8 8h2M8 12h2M8 16h2"/>',
+ log:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
+ me:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+ dl:'<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
+ dup:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',
+ del:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+ back:'<path d="m12 19-7-7 7-7M19 12H5"/>',play:'<path d="M6 3l14 9-14 9z"/>',stop:'<rect x="5" y="5" width="14" height="14" rx="2"/>',refresh:'<path d="M21 12a9 9 0 1 1-9-9c2.5 0 4.9 1 6.7 2.7L21 8M21 3v5h-5"/>',alert:'<path d="M21.7 18l-8-14a2 2 0 0 0-3.5 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3M12 9v4M12 17h.01"/>',check:'<path d="M20 6L9 17l-5-5"/>',ul:'<path d="M12 15V4M7 9l5-5 5 5M5 20h14"/>',
+ up:'<path d="M6 15l6-6 6 6"/>',dn:'<path d="M6 9l6 6 6-6"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>'
+};
+const svg=(n,sz=24)=>`<svg class="ico" width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]}</svg>`;
+const coById=id=>DB.companies.find(c=>c.id===id);
+const coName=c=>c?(c.business||c.contact||'Untitled company'):'Unknown company';
+const logMs=l=>(l.end??Date.now())-l.start;
+const logHrs=l=>logMs(l)/3.6e6;
+const billedBy=logId=>DB.docs.find(d=>d.type==='invoice'&&d.logIds.includes(logId));
+const roundH=(h,step)=>{step=+step;return step?Math.round(h/step)*step:Math.round(h*100)/100};
+
+function invCalc(d){
+  const logs=d.logIds.map(id=>DB.logs.find(l=>l.id===id)).filter(l=>l&&l.end).sort((a,b)=>a.start-b.start);
+  const rate=+d.rate||0;
+  const items=logs.map(l=>{const h=roundH(logHrs(l),d.round);return {log:l,hours:h,amount:Math.round(h*rate*100)/100}});
+  const hours=sum(items,i=>i.hours);
+  const auto=Math.round(sum(items,i=>i.amount)*100)/100;
+  const work=(d.amountOverride!==''&&d.amountOverride!=null&&d.mode==='summary')?+d.amountOverride:auto;
+  const extras=sum(d.extras,x=>+x.amount||0);
+  const subtotal=Math.round((work+extras)*100)/100;
+  const credit=+d.credit||0;
+  const total=Math.round((subtotal-credit)*100)/100;
+  const paid=Math.round(sum(d.payments,p=>+p.amount||0)*100)/100;
+  const balance=Math.round((total-paid)*100)/100;
+  let status='Unpaid';
+  if(paid>0&&balance>0.004)status='Partial'; else if(paid>0&&balance<=0.004)status='Paid';
+  if(status!=='Paid'&&d.dueDate&&d.dueDate<todayStr()&&balance>0)status=status==='Partial'?'Partial':'Overdue';
+  return {items,hours,auto,work,extras,subtotal,credit,total,paid,balance,status};
+}
+const statChip=s=>`<span class="chip ${s==='Paid'?'ok':s==='Partial'?'part':s==='Overdue'?'bad':''}">${s==='Partial'?'Partially paid':s}</span>`;
+
+function coStats(c){
+  const logs=DB.logs.filter(l=>l.companyId===c.id&&l.end);
+  const unb=logs.filter(l=>!billedBy(l.id));
+  const uh=sum(unb,logHrs);
+  const out=sum(DB.docs.filter(d=>d.type==='invoice'&&d.companyId===c.id),d=>Math.max(0,invCalc(d).balance));
+  return {total:sum(logs,logHrs),unbilledH:uh,unbilled$:uh*(+c.rate||0),outstanding:out};
+}
+function clearErr(){document.querySelectorAll('.ferr').forEach(n=>n.remove());document.querySelectorAll('[aria-invalid]').forEach(n=>n.removeAttribute('aria-invalid'))}
+function ferr(el,msg){if(!el)return toast(msg);clearErr();const p=document.createElement('p');p.className='ferr';p.setAttribute('role','alert');p.textContent=msg;(el.closest('label')||el).insertAdjacentElement('afterend',p);if(/INPUT|TEXTAREA|SELECT/.test(el.tagName)){el.setAttribute('aria-invalid','true');el.focus({preventScroll:true})}p.scrollIntoView({block:'center',behavior:'smooth'})}
+document.addEventListener('input',e=>{if(e.target.getAttribute&&e.target.getAttribute('aria-invalid')==='true')clearErr()});
+function toast(msg,act){const t=$('#toast');t.innerHTML=`<span>${esc(msg)}</span>`+(act?`<button data-a="toast-act">${esc(act.label)}</button>`:'');toast.fn=act&&act.fn;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,act?7000:3200)}
+
+/* ============ routing ============ */
+const route=()=>{const h=location.hash.replace(/^#\/?/,'').split('/');return {name:h[0]||'home',id:h[1]}};
+const go=p=>{location.hash='#/'+p};
+let LF={co:'',from:'',to:'',st:''};   // logs filter
+let DF='all';                        // docs filter
+window.addEventListener('hashchange',()=>render());
+
+function render(keep){
+  if(!render.i){render.i=1;$$('#nav [data-ic]').forEach(e=>e.innerHTML=svg(e.dataset.ic,26))}
+  const y=window.scrollY, r=route(), app=$('#app');
+  const v={home:viewHome,company:()=>viewCompany(r.id),logs:viewLogs,docs:viewDocs,doc:()=>viewDoc(r.id),statement:()=>viewStatement(r.id),settings:viewSettings}[r.name]||viewHome;
+  app.innerHTML=v();
+  $$('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.n===(r.name==='company'||r.name==='statement'?'home':r.name==='doc'?'docs':r.name)));
+  renderPills(); fit(); $('#foot').innerHTML=`${esc(BRAND.appName)} · Version ${APP_VERSION} · ${APP_DATE} · Made by <a href="${esc(BRAND.credit.url)}" target="_blank" rel="noopener">${esc(BRAND.credit.name)}</a>`;
+  if(r.name==='doc')refreshDoc();
+  if(r.name==='statement')refreshStmt();
+  if(keep)window.scrollTo(0,y);else if(!keep)window.scrollTo(0,0);
+  if(r.name==='home'){const q=$('#q');if(q&&!matchMedia('(pointer:coarse)').matches)q.focus()}
+}
+function renderPills(){
+  document.body.classList.toggle('running',DB.logs.some(l=>!l.end));
+  $('#pills').innerHTML=DB.logs.filter(l=>!l.end).map(l=>`<a class="pill" href="#/company/${l.companyId}"><span class="dot"></span><span style="flex:1;text-align:left">${esc(coName(coById(l.companyId)))} · clocked in</span><b data-tick="${l.start}">${fmtClock(Date.now()-l.start)}</b></a>`).join('');
+}
+setInterval(()=>$$('[data-tick]').forEach(e=>e.textContent=fmtClock(Date.now()-(+e.dataset.tick))),1000);
+
+/* ============ modal ============ */
+function openModal(html,dismiss){$('#modal').innerHTML=`<div class="scrim" ${dismiss?'data-a="scrim"':''}><div class="modal" role="dialog" aria-modal="true"><button class="xbtn" data-a="close" aria-label="Close">${svg('x')}</button>${html}</div></div>`;const f=$('#modal input:not([type=checkbox]),#modal textarea');if(f&&!matchMedia('(pointer:coarse)').matches)f.focus()}
+function closeModal(){CF=null;$('#modal').innerHTML=''}
+let CF=null;
+function confirmBox(o){const m=$('#modal'),prev=m.firstElementChild;if(prev)prev.remove();CF={fn:o.fn,prev};
+ m.insertAdjacentHTML('beforeend',`<div class="scrim" id="cfbox"><div class="modal confirm" role="alertdialog" aria-modal="true" aria-labelledby="cft"><h2 id="cft">${esc(o.title)}</h2><p>${esc(o.body)}</p><div class="acts"><button class="btn" data-a="cf-no" autofocus>Cancel</button><button class="btn ${o.destroy?'destroy':'primary'}" data-a="cf-yes">${esc(o.ok)}</button></div></div></div>`);
+ const b=m.querySelector('[data-a=cf-no]');if(b)b.focus()}
+function confirmNo(){const m=$('#modal'),prev=CF&&CF.prev;CF=null;m.innerHTML='';if(prev)m.appendChild(prev)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&CF)confirmNo()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+/* ============ HOME ============ */
+function viewHome(){
+  const cos=DB.companies;
+  const unb=sum(cos,c=>coStats(c).unbilled$), uh=sum(cos,c=>coStats(c).unbilledH), out=sum(cos,c=>coStats(c).outstanding);
+  return `<section class="hero"><h1>Who are you working for?</h1><p>Search for a company, or add a new one.</p>
+  <div class="search"><input id="q" placeholder="Search companies…" autocomplete="off"><button class="btn primary" data-a="new-co">+ New</button></div></section>
+  <div class="stats">
+    <div class="card stat"><div class="l">Not invoiced yet</div><div class="v">${uh>0?`${uh.toFixed(1)} hrs · ${money(unb)}`:'Nothing waiting'}</div><div class="s">Time you’ve tracked that isn’t on an invoice</div></div>
+    <div class="card stat"><div class="l">Outstanding on invoices</div><div class="v">${money(out,out%1?2:0)}</div></div>
+    <div class="card stat"><div class="l">Companies</div><div class="v">${cos.length}</div></div>
+  </div>
+  <div id="colist">${coList('')}</div>`;
+}
+const lastAct=c=>Math.max(0,...DB.logs.filter(l=>l.companyId===c.id).map(l=>l.start));
+function coList(q){
+  q=q.trim().toLowerCase();
+  const list=DB.companies.filter(c=>!q||[c.business,c.contact,c.email,c.phone].some(x=>(x||'').toLowerCase().includes(q)))
+    
+    .sort((a,b)=>lastAct(b)-lastAct(a)||coName(a).localeCompare(coName(b)));
+  const exact=DB.companies.some(c=>(c.business||'').trim().toLowerCase()===q);
+  let h='<div class="cgrid">';
+  if(q&&!exact)h+=`<button class="co add" data-a="new-co" data-name="${esc(q)}" style="text-transform:none">+ Add “${esc(q)}” as a new company</button>`;
+  h+=list.map(c=>{
+    const s=coStats(c),run=DB.logs.some(l=>!l.end&&l.companyId===c.id);
+    return `<button class="co" data-a="open-co" data-id="${c.id}"><b>${esc(coName(c))}</b><div class="meta">${esc(c.contact||'')}${c.contact&&c.rate?' · ':''}${c.rate?money(c.rate)+'/hr':''}&nbsp;</div>
+      ${run?'<span class="chip teal"><span class="dot"></span> Clocked in</span> ':''}${s.unbilledH>0?`<span class="chip">${s.unbilledH.toFixed(1)} hrs unbilled</span> `:''}${s.outstanding>0?`<span class="chip part">${money(s.outstanding,2)} owed</span>`:''}</button>`;
+  }).join('');
+  h+='</div>';
+  if(!list.length&&!q)h=`<div class="empty">No companies yet — type a name above and add your first one.<br><br><button class="btn" data-a="load-demo">Or look around with sample data</button></div>`;
+  return h;
+}
+
+/* ---- company modal ---- */
+const PAYM=['Zelle','Check','Cash','Credit card','Bank transfer / ACH','PayPal','Venmo','Other'];
+const payByOf=d=>d.payBy!==undefined?d.payBy:((coById(d.companyId)||{}).payPref||'');
+function companyModal(id,prefName){
+  const c=id?coById(id):{business:prefName||'',contact:'',phone:'',email:'',rate:'',payPref:''};
+  openModal(`<h2>${id?'Edit company':'New company'}</h2>
+   <p class="muted small" style="margin-top:-8px">Nothing here is required.</p>
+   <label>Business name<input id="m_business" value="${esc(c.business)}"></label>
+   <label>Contact name<input id="m_contact" value="${esc(c.contact)}"></label>
+   <div class="g2"><label>Phone<input id="m_phone" type="tel" value="${esc(c.phone)}"></label>
+   <label>Email<input id="m_email" type="email" value="${esc(c.email)}"></label></div>
+   <label>Hourly rate ($)<input id="m_rate" type="number" step="any" min="0" value="${esc(c.rate)}" placeholder="e.g. 100"></label>
+   <label>Preferred payment method <small>(how they like to pay)</small><select id="m_pay"><option value="">No preference</option>${PAYM.map(m=>`<option ${m===c.payPref?'selected':''}>${m}</option>`).join('')}</select></label>
+   <div class="acts">${id?'<button class="link" data-a="del-co" data-id="'+id+'">Delete company</button><span class="sp"></span>':''}<button class="btn" data-a="close">Cancel</button><button class="btn primary" data-a="save-co" data-id="${id||''}">Save</button></div>`);
+}
+
+/* ============ COMPANY PAGE ============ */
+function viewCompany(id){
+  const c=coById(id); if(!c)return `<p class="empty">Company not found. <a href="#/">Back</a></p>`;
+  const s=coStats(c);
+  const logs=DB.logs.filter(l=>l.companyId===id);
+  const docs=DB.docs.filter(d=>d.companyId===id);
+  return `<a class="back" href="#/">${svg('back',16)}All companies</a>
+  <div class="cohead"><div class="cofirst"><div class="cohd"><h1>${esc(coName(c))}</h1><button class="btn" data-a="edit-co" data-id="${id}">Edit</button></div>
+    <div class="info">${c.contact&&c.business?`<span class="cl">${esc(c.contact)}</span>`:''}${c.phone?`<span><a class="cl" href="tel:${esc(c.phone)}">${esc(c.phone)}</a></span>`:''}${c.email?`<span><a class="cl" href="mailto:${esc(c.email)}">${esc(c.email)}</a></span>`:''}${c.payPref?`<span>Prefers to pay by <b>${esc(c.payPref)}</b></span>`:''}</div></div>
+    <div class="ratebox">Hourly rate $<input type="number" inputmode="decimal" step="any" min="0" data-corate="${id}" value="${esc(c.rate)}" placeholder="0"> /hr</div></div>
+  <div class="cols">
+    <div class="card"><h3>Time keeper</h3><div id="tk">${tkHtml(c)}</div></div>
+    <div class="card"><h3>At a glance</h3>
+      <div class="g2 keep"><div class="stat"><div class="l">Hours to invoice</div><div class="v">${s.unbilledH.toFixed(2)}</div></div>
+      <div class="stat"><div class="l">Value to invoice</div><div class="v">${money(s.unbilled$,s.unbilled$%1?2:0)}</div></div>
+      <div class="stat" style="margin-top:14px"><div class="l">All-time hours</div><div class="v">${s.total.toFixed(2)}</div></div>
+      <div class="stat" style="margin-top:14px"><div class="l">Outstanding</div><div class="v">${money(s.outstanding,s.outstanding%1?2:0)}</div></div></div>
+    </div></div>
+  <div class="sect docsect"><h2>Estimates &amp; invoices</h2><span class="sp"></span><button class="btn" data-a="open-stmt" data-id="${id}">Statement</button><button class="btn" data-a="new-doc" data-type="estimate" data-co="${id}">+ Estimate</button><button class="btn primary" data-a="new-doc" data-type="invoice" data-co="${id}">+ Invoice</button></div>
+  ${docsTable(docs,false)}
+  <div class="sect"><h2>Time logs</h2><span class="sp"></span><button class="btn" data-a="add-log" data-co="${id}">+ Add past entry</button></div>
+  ${logsTable(logs,false)}`;
+}
+
+function tkHtml(c){
+  const run=DB.logs.find(l=>!l.end&&l.companyId===c.id);
+  if(!run)return `<div class="tk"><div class="tkbtns"><button class="btn primary big" data-a="in-now">${svg('play',16)}Clock in now</button><button class="btn big" data-a="toggle" data-target="inat">Clock in at…</button></div>
+   <div class="reveal" id="inat" hidden><label>Start time<input type="datetime-local" id="inatv" value="${toLocalInput(Date.now())}"></label><button class="btn primary" data-a="in-at">Clock in</button></div></div>`;
+  const ok=run.notes.trim()?'':'disabled';
+  return `<div class="tk"><div class="tkrun"><span class="dot"></span> Clocked in ${sameDay(run.start,Date.now())?'at':'since'} <b>${sameDay(run.start,Date.now())?'':fmtShort(run.start)+', '}${fmtTime(run.start)}</b>
+     <div class="big" data-tick="${run.start}">${fmtClock(Date.now()-run.start)}</div></div>
+   <label>What did you work on? <small>(required before you can clock out)</small><textarea id="tknotes" rows="4" placeholder="Describe what you did this session…">${esc(run.notes)}</textarea></label>
+   <div class="tkbtns"><button class="btn danger big" data-a="out-now" data-gate ${ok}>${svg('stop',16)}Clock out now</button><button class="btn big" data-a="toggle" data-target="outat" data-gate ${ok}>Clock out at…</button></div>
+   <div class="reveal" id="outat" hidden><label>End time<input type="datetime-local" id="outatv" value="${toLocalInput(Date.now())}"></label><button class="btn primary" data-a="out-at" data-gate ${ok}>Clock out</button></div>
+   <p class="tkhelp" id="tkhelp" ${ok?'':'hidden'}>Add a note about what you did to unlock clock out.</p>
+   <button class="link" data-a="discard" data-id="${run.id}">Discard this session</button></div>`;
+}
+
+function finishLog(run,end,tEl){
+  const at=tEl||$('.tkbtns');
+  if(!run.notes.trim())return ferr($('#tknotes'),'Add notes about what you did before clocking out.');
+  if(!(end>run.start))return ferr(at,'End time must be after the start time.');
+  if(end>Date.now()+60000)return ferr(at,'End time can’t be in the future.');
+  run.end=end; save(); toast(`Clocked out · ${fmtDur(run.end-run.start)}`,{label:'Undo',fn:()=>{run.end=null;save();render(true);toast('Back on the clock')}}); render(true);
+}
+
+/* ============ LOGS ============ */
+function logsTable(logs,showCo){
+  logs=[...logs].sort((a,b)=>b.start-a.start);
+  if(!logs.length)return `<div class="empty">No time logged yet.</div>`;
+  const rows=logs.map(l=>{
+    const b=billedBy(l.id), run=!l.end;
+    const time=run?`${fmtTime(l.start)} – <b>now</b>`:`${fmtTime(l.start)} – ${fmtTime(l.end)}${sameDay(l.start,l.end)?'':' (+1d)'}`;
+    return `<tr data-a="edit-log" data-id="${l.id}"><td class="r" style="text-align:left">${fmtShort(l.start)}</td>${showCo?`<td><b>${esc(coName(coById(l.companyId)))}</b></td>`:''}
+     <td class="r" style="text-align:left">${time}</td>
+     <td class="r">${run?`<span data-tick="${l.start}">${fmtClock(Date.now()-l.start)}</span>`:`<b>${fmtDur(logMs(l))}</b><br><span class="muted small">${logHrs(l).toFixed(2)} h</span>`}</td>
+     <td class="notes">${esc(l.notes)||'<span class="muted">—</span>'}</td>
+     <td>${run?'<span class="chip teal">Running</span>':b?`<span class="chip ok">${esc(b.number)}</span>`:'<span class="chip">Unbilled</span>'}</td></tr>`;
+  }).join('');
+  const cards=logs.map(l=>{
+    const b=billedBy(l.id),run=!l.end;
+    const time=run?`${fmtTime(l.start)} – now`:`${fmtTime(l.start)} – ${fmtTime(l.end)}`;
+    return `<button class="lc" data-a="edit-log" data-id="${l.id}"><div class="top2"><div><div class="d">${fmtShort(l.start)}${showCo?' · '+esc(coName(coById(l.companyId))):''}</div><div class="tm">${time}</div></div>
+      <div class="big">${run?`<span data-tick="${l.start}">${fmtClock(Date.now()-l.start)}</span>`:fmtDur(logMs(l))}</div></div>
+      ${l.notes?`<div class="nt">${esc(l.notes)}</div>`:''}<div style="margin-top:8px">${run?'<span class="chip teal">Running</span>':b?`<span class="chip ok">${esc(b.number)}</span>`:'<span class="chip">Unbilled</span>'}</div></button>`;
+  }).join('');
+  return `<div class="tbl desk"><table><thead><tr><th>Date</th>${showCo?'<th>Company</th>':''}<th>Time</th><th class="r">Hours</th><th>What I did</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div><div class="lcards">${cards}</div>`;
+}
+function viewLogs(){
+  return `<h1 style="font-size:36px;font-weight:800;margin-bottom:18px">All logs</h1>
+  <div class="filters">
+   <label>Company<select data-lf="co"><option value="">All companies</option>${DB.companies.map(c=>`<option value="${c.id}" ${LF.co===c.id?'selected':''}>${esc(coName(c))}</option>`).join('')}</select></label>
+   <label>From<input type="date" data-lf="from" value="${LF.from}"></label>
+   <label>To<input type="date" data-lf="to" value="${LF.to}"></label>
+   <label>Status<select data-lf="st"><option value="">All</option><option value="unbilled" ${LF.st==='unbilled'?'selected':''}>Unbilled</option><option value="billed" ${LF.st==='billed'?'selected':''}>Invoiced</option></select></label>
+  </div>
+  <div id="logres">${logRes()}</div>`;
+}
+function filteredLogs(){
+  return DB.logs.filter(l=>{
+    if(LF.co&&l.companyId!==LF.co)return false;
+    if(LF.from&&l.start<parseD(LF.from).getTime())return false;
+    if(LF.to&&l.start>=parseD(LF.to).getTime()+864e5)return false;
+    if(LF.st==='unbilled'&&(billedBy(l.id)||!l.end))return false;
+    if(LF.st==='billed'&&!billedBy(l.id))return false;
+    return true;
+  });
+}
+function logRes(){
+  const ls=filteredLogs(), done=ls.filter(l=>l.end), h=sum(done,logHrs);
+  const val=sum(done,l=>logHrs(l)*(+coById(l.companyId)?.rate||0));
+  return `<div class="row" style="margin-bottom:14px"><span class="chip teal">${ls.length} entr${ls.length===1?'y':'ies'}</span><span class="chip teal">${h.toFixed(2)} hours</span><span class="chip teal">${money(val,2)} at each company’s rate</span><span class="sp"></span><button class="btn" data-a="add-log" data-co="${LF.co}">+ Add past entry</button></div>${logsTable(ls,true)}`;
+}
+function logModal(id,coId){
+  const l=id?DB.logs.find(x=>x.id===id):{companyId:coId||'',start:Date.now()-36e5,end:Date.now(),notes:''};
+  if(!id&&!DB.companies.length)return ferr($('[data-a=add-log]'),'Add a company first, then you can add entries.');
+  const b=id&&billedBy(id);
+  openModal(`<h2>${id?'Edit time entry':'Add past entry'}</h2>
+   ${b?`<p class="chip ok">On invoice ${esc(b.number)}</p>`:''}
+   <label>Company<select id="m_co">${DB.companies.map(c=>`<option value="${c.id}" ${c.id===l.companyId?'selected':''}>${esc(coName(c))}</option>`).join('')}</select></label>
+   <div class="g2"><label>Start<input type="datetime-local" id="m_start" value="${toLocalInput(l.start)}"></label>
+   <label>End <small>(blank = still running)</small><input type="datetime-local" id="m_end" value="${l.end?toLocalInput(l.end):''}"></label></div>
+   <label>What I did <small>(required once there’s an end time)</small><textarea id="m_notes" rows="4">${esc(l.notes)}</textarea></label>
+   <div class="acts">${id?`<button class="link" data-a="del-log" data-id="${id}">Delete entry</button><span class="sp"></span>`:''}<button class="btn" data-a="close">Cancel</button><button class="btn primary" data-a="save-log" data-id="${id||''}">Save</button></div>`);
+}
+
+/* ============ DOCS LIST ============ */
+function docTotal(d){return d.type==='invoice'?invCalc(d):null}
+function docsTable(docs,showCo){
+  docs=[...docs].sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.created-a.created);
+  if(!docs.length)return `<div class="empty">Nothing here yet.</div>`;
+  const rows=docs.map(d=>{
+    const co=coById(d.companyId);
+    let amt='',stat='';
+    if(d.type==='invoice'){const c=invCalc(d);amt=money(c.total,2);stat=statChip(c.status)+(c.balance>0&&c.paid>0?` <span class="muted small">${money(c.balance,2)} left</span>`:'');}
+    else{amt=estAmount(d).short;stat=`<span class="chip ${d.status==='Accepted'?'ok':d.status==='Declined'?'bad':''}">${esc(d.status)}</span>`}
+    return `<tr data-a="open-doc" data-id="${d.id}"><td><span class="chip ${d.type==='invoice'?'teal':''}">${d.type==='invoice'?'Invoice':'Estimate'}</span></td><td><b>${esc(d.number)}</b></td>${showCo?`<td>${esc(coName(co))}</td>`:''}<td>${esc(d.title||'—')}</td><td>${fmtLong(d.date)}</td><td class="r"><b>${amt}</b></td><td>${stat}</td></tr>`;
+  }).join('');
+  const cards=docs.map(d=>{
+    let amt,stat;
+    if(d.type==='invoice'){const c=invCalc(d);amt=money(c.total,2);stat=statChip(c.status)+(c.balance>0&&c.paid>0?` <span class="muted small">${money(c.balance,2)} left</span>`:'')}
+    else{amt=estAmount(d).short;stat=`<span class="chip ${d.status==='Accepted'?'ok':d.status==='Declined'?'bad':''}">${esc(d.status)}</span>`}
+    return `<button class="lc" data-a="open-doc" data-id="${d.id}"><div class="top2"><div><div class="d">${d.type==='invoice'?'Invoice':'Estimate'} ${esc(d.number)}</div><div class="tm">${showCo?esc(coName(coById(d.companyId)))+' · ':''}${fmtLong(d.date)}</div></div><div class="big">${amt}</div></div>
+      ${d.title&&d.title!=='Invoice'?`<div class="nt">${esc(d.title)}</div>`:''}<div style="margin-top:8px">${stat}</div></button>`;
+  }).join('');
+  return `<div class="tbl desk"><table><thead><tr><th></th><th>#</th>${showCo?'<th>Company</th>':''}<th>Title</th><th>Date</th><th class="r">Amount</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div><div class="lcards">${cards}</div>`;
+}
+function viewDocs(){
+  const all=DB.docs.filter(d=>DF==='all'||d.type===DF);
+  const out=sum(DB.docs.filter(d=>d.type==='invoice'),d=>Math.max(0,invCalc(d).balance));
+  const paid=sum(DB.docs.filter(d=>d.type==='invoice'),d=>invCalc(d).paid);
+  return `<div class="row" style="margin-bottom:18px"><h1 style="font-size:36px;font-weight:800">Estimates &amp; invoices</h1><span class="sp"></span>
+   <button class="btn" data-a="pick-co" data-type="estimate">+ Estimate</button><button class="btn primary" data-a="pick-co" data-type="invoice">+ Invoice</button></div>
+  <div class="row" style="margin-bottom:16px"><div class="tabs">${[['all','All'],['estimate','Estimates'],['invoice','Invoices']].map(([k,l])=>`<button data-a="docf" data-k="${k}" class="${DF===k?'on':''}">${l}</button>`).join('')}</div><span class="sp"></span>
+   <span class="chip part">${money(out,2)} outstanding</span><span class="chip ok">${money(paid,2)} received</span></div>
+  ${docsTable(all,true)}`;
+}
+function pickCompany(type){
+  openModal(`<h2>New ${type} — pick a company</h2><input id="pq" placeholder="Search…" autocomplete="off"><div id="pl">${pickList(type,'')}</div>`,true);
+}
+function pickList(type,q){
+  q=q.toLowerCase();
+  const l=DB.companies.filter(c=>!q||coName(c).toLowerCase().includes(q));
+  return l.map(c=>`<button class="pickrow" data-a="new-doc" data-type="${type}" data-co="${c.id}">${esc(coName(c))}</button>`).join('')||'<p class="muted">No match. Add the company from the Companies page first.</p>';
+}
+
+/* ============ DOC CREATION ============ */
+const nextNum=t=>{const k=t==='invoice'?'inv':'est';const n=DB.seq[k]++;return (t==='invoice'?'INV-':'EST-')+String(n).padStart(3,'0')};
+function newDoc(type,coId){
+  const co=coById(coId); let d;
+  if(type==='estimate'){
+    d={id:uid(),type,companyId:coId,number:nextNum(type),created:Date.now(),date:todayStr(),status:'Draft',label:'Project Proposal',title:'',overview:'',
+       pricing:'range',rate:co.rate||'',hoursLo:'',hoursHi:'',flat:'',capOn:false,cap:'',depositOn:true,deposit:'',depositLabel:'Deposit to begin',
+       billingNote:'Invoicing occurs in increments as milestones are completed.',stepsTitle:'Process',steps:['']};
+  }else{
+    const logIds=DB.logs.filter(l=>l.companyId===coId&&l.end&&!billedBy(l.id)).map(l=>l.id);
+    d={id:uid(),type,companyId:coId,number:nextNum(type),created:Date.now(),date:todayStr(),dueDate:'',title:'Invoice',logIds,mode:'itemized',round:'0',rate:co.rate||'',
+       summary:'',summaryEdited:false,summaryLabel:'Professional services',amountOverride:'',extras:[],credit:'',creditLabel:'Deposit received',notes:DB.me.pay||'',payBy:co.payPref||'',showPayBy:true,payments:[]};
+    d.summary=draftSummary(logIds);
+  }
+  DB.docs.push(d); save(); closeModal(); go('doc/'+d.id);
+}
+function draftSummary(ids){
+  const seen=new Set(),out=[];
+  ids.map(id=>DB.logs.find(l=>l.id===id)).filter(Boolean).sort((a,b)=>a.start-b.start).forEach(l=>{
+    (l.notes||'').split(/\n+/).forEach(line=>{
+      line=line.replace(/^[\s\-•*·]+/,'').replace(/^\d+[.)]\s+/,'').trim();
+      if(!line)return; const k=line.toLowerCase(); if(seen.has(k))return; seen.add(k); out.push(cap1(line));
+    });
+  });
+  return out.join('\n');
+}
+
+/* ============ DOC EDITOR ============ */
+const curDoc=()=>DB.docs.find(d=>d.id===route().id);
+const I=(f,v,x='')=>`<input data-f="${f}" value="${esc(v)}" ${x}>`;
+const N=(f,v,x='')=>`<input data-f="${f}" data-n="1" type="number" inputmode="decimal" step="any" min="0" value="${esc(v)}" ${x}>`;
+const T=(f,v,rows=4,x='')=>`<textarea data-f="${f}" rows="${rows}" ${x}>${esc(v)}</textarea>`;
+const CK=(f,v,label)=>`<label class="inl"><input type="checkbox" data-f="${f}" ${v?'checked':''}>${label}</label>`;
+const STRUCT=new Set(['mode','pricing','capOn','depositOn']);
+
+function viewDoc(id){
+  const d=DB.docs.find(x=>x.id===id); if(!d)return `<p class="empty">Not found. <a href="#/docs">Back</a></p>`;
+  const co=coById(d.companyId);
+  return `<div class="edhead"><a class="back" style="margin:0" href="#/company/${d.companyId}">${svg('back',16)}${esc(coName(co))}</a>
+    <span class="t">${d.type==='invoice'?'Invoice':'Estimate'} ${esc(d.number)}</span><div class="hint" id="hint"></div><span class="sp"></span>
+    <div class="mtog"><button class="on" data-a="mv" data-v="edit">Edit</button><button data-a="mv" data-v="pv">Preview</button></div>
+    <button class="ibtn" data-a="del-doc" aria-label="Delete" title="Delete">${svg('del')}</button><button class="ibtn" data-a="dup-doc" aria-label="Duplicate" title="Duplicate">${svg('dup')}</button><button class="ibtn primary" data-a="print" aria-label="Download PDF" title="Download PDF">${svg('dl')}</button></div>
+  <div class="editor"><div id="form">${d.type==='invoice'?invForm(d,co):estForm(d,co)}</div>
+  <div id="pvwrap"><p class="pvhint">Tap the page to zoom in or out</p><div id="pv"></div></div></div>`;
+}
+
+function estForm(d,co){
+  return `<div class="fsec"><h3>The basics</h3>
+    <label>Project title<input data-f="title" value="${esc(d.title)}" placeholder="e.g. Dashboard Redesign"></label>
+    <label>Overview <small>(a sentence or two)</small>${T('overview',d.overview,4,'placeholder="What this covers…"')}</label>
+    <div class="g2"><label>Date<input type="date" data-f="date" value="${d.date}"></label>
+    <label>Status<select data-f="status">${['Draft','Sent','Accepted','Declined'].map(s=>`<option ${d.status===s?'selected':''}>${s}</option>`).join('')}</select></label></div>
+    <label>Document label <small>(top right)</small>${I('label',d.label)}</label></div>
+  <div class="fsec"><h3>Price</h3>
+    <div class="modes">
+     <label><input type="radio" name="pricing" data-f="pricing" value="range" ${d.pricing==='range'?'checked':''}><span>Hourly, with a range<small>Estimated hours × your rate</small></span></label>
+     <label style="margin-top:8px"><input type="radio" name="pricing" data-f="pricing" value="flat" ${d.pricing==='flat'?'checked':''}><span>One flat price</span></label></div>
+    <div style="margin-top:14px">
+    ${d.pricing==='range'?`<label>Hourly rate ($)${N('rate',d.rate)}</label>
+      <div class="g2"><label>Hours — low${N('hoursLo',d.hoursLo)}</label><label>Hours — high${N('hoursHi',d.hoursHi)}</label></div>
+      ${CK('capOn',d.capOn,'Cap the total')}${d.capOn?`<label>Capped at ($)${N('cap',d.cap)}</label>`:''}`
+    :`<label>Price ($)${N('flat',d.flat)}</label>`}
+    ${CK('depositOn',d.depositOn,'Ask for a deposit')}
+    ${d.depositOn?`<div class="g2"><label>Deposit ($)${N('deposit',d.deposit)}</label><label>Label${I('depositLabel',d.depositLabel)}</label></div>`:''}
+    <label>Note under the price${T('billingNote',d.billingNote,3)}</label></div></div>
+  <div class="fsec"><h3>Steps</h3>
+    <label>Section title${I('stepsTitle',d.stepsTitle)}</label>
+    <div id="steps">${d.steps.map((s,i)=>stepRow(s,i,d.steps.length)).join('')}</div>
+    <button class="btn" data-a="step-add">+ Add step</button>
+    <p class="muted small" style="margin:10px 0 0">Tip: press Enter in a step to start the next one.</p></div>`;
+}
+const stepRow=(s,i,n)=>`<div class="stepr"><span class="n">${i+1}</span><input data-step="${i}" value="${esc(s)}" placeholder="Describe this step…"><button class="ib" data-a="step-up" data-i="${i}" ${i?'':'disabled'} aria-label="Move step up">${svg('up',20)}</button><button class="ib" data-a="step-dn" data-i="${i}" ${i<n-1?'':'disabled'} aria-label="Move step down">${svg('dn',20)}</button><button class="ib" data-a="step-del" data-i="${i}" aria-label="Remove step">${svg('x',20)}</button></div>`;
+
+function invForm(d,co){
+  const avail=DB.logs.filter(l=>l.companyId===d.companyId&&l.end&&(d.logIds.includes(l.id)||!billedBy(l.id))).sort((a,b)=>a.start-b.start);
+  const c=invCalc(d);
+  return `<div class="fsec"><h3>Invoice details</h3>
+    <label>Title<input data-f="title" value="${esc(d.title)}"></label>
+    <div class="g2"><label>Invoice #${I('number',d.number)}</label><label>Date<input type="date" data-f="date" value="${d.date}"></label></div>
+    <label>Due date <small>(optional)</small><input type="date" data-f="dueDate" value="${d.dueDate||''}"></label></div>
+
+  <div class="fsec"><h3>Which time to bill</h3>
+    ${avail.length?`<div class="row small" style="margin-bottom:4px;gap:4px"><button class="link" style="color:var(--accent-btn);padding:0 8px" data-a="sel-all">Select all</button><button class="link" style="color:var(--accent-btn);padding:0 8px" data-a="sel-none">Select none</button></div>
+    ${avail.map(l=>`<label class="logsel"><input type="checkbox" data-logsel="${l.id}" ${d.logIds.includes(l.id)?'checked':''}><span><b>${fmtShort(l.start)}</b> · ${fmtDur(logMs(l))}<span class="nt">${esc((l.notes||'').slice(0,90))}${(l.notes||'').length>90?'…':''}</span></span></label>`).join('')}`
+    :`<p class="muted small">No unbilled time for this company. Clock some time first, or just add line items below.</p>`}</div>
+
+  <div class="fsec"><h3>How should it look?</h3>
+    <div class="modes">
+     <label><input type="radio" name="mode" data-f="mode" value="itemized" ${d.mode==='itemized'?'checked':''}><span>Show hours &amp; notes<small>A table: date, what you did, hours, amount</small></span></label>
+     <label style="margin-top:8px"><input type="radio" name="mode" data-f="mode" value="summary" ${d.mode==='summary'?'checked':''}><span>Just what I worked on<small>No hours shown — a short list of the work, then the amount</small></span></label></div>
+    <div class="g2" style="margin-top:14px"><label>Rate ($/hr)${N('rate',d.rate)}</label>
+      <label>Round hours to<select data-f="round">${[['0','Exact'],['0.1','Nearest 0.1'],['0.25','Nearest 0.25'],['0.5','Nearest 0.5'],['1','Nearest 1']].map(([v,l])=>`<option value="${v}" ${d.round===v?'selected':''}>${l}</option>`).join('')}</select></label></div>
+    ${d.mode==='summary'?`<label>What I worked on <small>(one per line — drafted from your clock-out notes)</small>${T('summary',d.summary,6)}</label>
+      <button class="btn" data-a="redraft">${svg('refresh',16)}Redraft from my notes</button>
+      <div class="g2" style="margin-top:14px"><label>Line label${I('summaryLabel',d.summaryLabel)}</label>
+      <label>Amount <small>(blank = hours × rate)</small>${N('amountOverride',d.amountOverride,'placeholder="auto"')}</label></div>`:''}</div>
+
+  <div class="fsec"><h3>Extra line items &amp; credits</h3>
+    ${d.extras.map((x,i)=>`<div class="stepr"><input data-exi="${i}" data-exk="desc" value="${esc(x.desc)}" placeholder="Description"><input data-exi="${i}" data-exk="amount" type="number" step="any" value="${esc(x.amount)}" placeholder="$" style="width:100px"><button class="ib" data-a="ex-del" data-i="${i}" aria-label="Remove line item">${svg("x",20)}</button></div>`).join('')}
+    <button class="btn" data-a="ex-add">+ Add line item</button>
+    <div class="g2" style="margin-top:14px"><label>Credit / deposit already applied ($)${N('credit',d.credit)}</label><label>Credit label${I('creditLabel',d.creditLabel)}</label></div></div>
+
+  <div class="fsec"><h3>Payment info &amp; notes</h3>
+    <label>Pay by <small>(this invoice only)</small><select data-f="payBy"><option value="">No preference</option>${PAYM.map(m=>`<option ${m===payByOf(d)?'selected':''}>${m}</option>`).join('')}</select></label>
+    ${CK('showPayBy',d.showPayBy!==false,'Show “Pay by” on the invoice')}
+    ${T('notes',d.notes,4,'placeholder="How to pay (Zelle, check…), thank-you note…"')}</div>
+
+  <div class="fsec"><h3>Payments received</h3>
+    <div id="paystat" class="row" style="margin-bottom:10px">${payStat(c)}</div>
+    ${d.payments.map(p=>`<div class="pay"><span><b>${money(p.amount,2)}</b> · ${esc(p.method)} · ${fmtLong(p.date)}${p.note?`<br><span class="muted">${esc(p.note)}</span>`:''}</span><button class="ib" data-a="pay-del" data-id="${p.id}" aria-label="Remove payment">${svg("x",20)}</button></div>`).join('')}
+    <div style="margin-top:12px;background:var(--bg);border-radius:12px;padding:14px">
+     <div class="g2"><label>Amount paid ($)<input id="p_amt" type="number" step="any" min="0" value="${c.balance>0?c.balance.toFixed(2):''}"></label><label>Date paid<input id="p_date" type="date" value="${todayStr()}"></label></div>
+     <div class="g2"><label>How<select id="p_how">${PAYM.map(m=>`<option ${m===payByOf(d)?'selected':''}>${m}</option>`).join('')}</select></label><label>Note <small>(check #, etc.)</small><input id="p_note"></label></div>
+     <div class="row"><button class="btn primary" data-a="pay-add">Record payment</button></div></div></div>`;
+}
+const payStat=c=>`${statChip(c.status)}<span class="muted small">${money(c.paid,2)} received of ${money(c.total,2)}</span>`;
+
+/* ----- estimate math ----- */
+function estAmount(d){
+  const rate=+d.rate||0;
+  if(d.pricing==='flat'){const v=+d.flat||0;return {lo:v,hi:v,short:money(v),value:money(v)}}
+  let lo=(+d.hoursLo||0)*rate, hi=(+d.hoursHi||0)*rate;
+  if(!d.hoursLo&&d.hoursHi)lo=hi; if(d.hoursLo&&!d.hoursHi)hi=lo;
+  if(d.capOn&&+d.cap){hi=Math.min(hi,+d.cap);lo=Math.min(lo,hi)}
+  const value=lo===hi?money(lo):`${money(lo)}–${money(hi)}`;
+  return {lo,hi,short:value,value};
+}
+
+/* ----- preview ----- */
+function refreshDoc(){
+  const d=curDoc(); if(!d)return;
+  const co=coById(d.companyId);
+  $('#pv').innerHTML=d.type==='invoice'?invPage(d,co):estPage(d,co);
+  if(d.type==='invoice'){const c=invCalc(d);$('#hint').innerHTML=`${statChip(c.status)}<span>Total <b>${money(c.total,2)}</b></span><span>Hours <b>${c.hours.toFixed(2)}</b></span>${c.paid?`<span>Paid <b>${money(c.paid,2)}</b></span>`:''}<span>Balance <b>${money(c.balance,2)}</b></span>`;
+    const ps=$('#paystat');if(ps)ps.innerHTML=payStat(c);}
+  else $('#hint').innerHTML=`<span>Estimate <b>${estAmount(d).value}</b></span>`;
+  fit();
+}
+let PVZ=false;
+function fit(){const w=$('#pvwrap'),p=$('#pv');if(!w||!p)return;if(!w.clientWidth)return;const fitS=Math.min(1,w.clientWidth/816);p.style.zoom=(PVZ&&fitS<.8)?.8:fitS}
+window.addEventListener('resize',fit);
+
+const secH=t=>`<div class="dsec"><span>${esc(t)}</span><i></i></div>`;
+const ph=t=>`<span class="ph">${t}</span>`;
+function docHead(d,right,extra=''){return `<div class="dh"><img class="dlogo" src="${esc(BRAND.logo)}" alt="${esc(BRAND.appName)}"><div class="dmeta"><b>${esc(right)}</b><span>${fmtLong(d.date)}</span>${extra}</div></div>`}
+const byLine=()=>`Prepared by ${esc([DB.me.name,DB.me.business].filter(Boolean).join(', '))||'you'}`;
+
+let PDFF=null;
+const loadJs=src=>new Promise((ok,no)=>{const x=document.createElement('script');x.src=src;x.onload=ok;x.onerror=()=>no(new Error('load '+src));document.head.appendChild(x)});
+async function makePDF(html,name){
+  if(!window.html2canvas)await loadJs('assets/vendor/html2canvas.min.js');
+  if(!window.jspdf)await loadJs('assets/vendor/jspdf.umd.min.js');
+  const host=document.createElement('div');host.style.cssText='position:fixed;left:-10000px;top:0;width:816px;background:#fff';
+  host.innerHTML=html;document.body.appendChild(host);
+  try{
+    if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+    const page=host.firstElementChild,W=816,H=Math.ceil(page.scrollHeight),S=2;
+    const cv=await html2canvas(page,{scale:S,backgroundColor:'#fff',useCORS:true,width:W,windowWidth:W});
+    const top=page.getBoundingClientRect().top;
+    const cuts=[...page.querySelectorAll(':scope > *, li, tr')].map(e=>e.getBoundingClientRect().bottom-top);
+    const {jsPDF}=window.jspdf;
+    const one=H<=1060,pdf=new jsPDF({unit:'px',format:[W,one?Math.max(H,1056):1056],hotfixes:['px_scaling']});
+    const slice=(y,end,at)=>{const c=document.createElement('canvas');c.width=cv.width;c.height=Math.round((end-y)*S);c.getContext('2d').drawImage(cv,0,Math.round(y*S),cv.width,c.height,0,0,cv.width,c.height);pdf.addImage(c.toDataURL('image/jpeg',.92),'JPEG',0,at,W,end-y)};
+    if(one)slice(0,H,0);
+    else{let y=0,first=true;while(y<H-1){let end=Math.min(H,y+(first?1016:976));if(end<H){const c=cuts.filter(v=>v>y+200&&v<=end);if(c.length)end=Math.max(...c)}
+      if(!first)pdf.addPage();slice(y,end,first?0:40);y=end;first=false}}
+    return new File([pdf.output('blob')],name+'.pdf',{type:'application/pdf'});
+  }finally{host.remove()}
+}
+async function deliverPDF(file){
+  const touch=matchMedia('(pointer:coarse)').matches;
+  if(touch&&navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file],title:file.name});return}
+    catch(err){if(err.name==='AbortError')return;PDFF=file;
+      openModal(`<h2>Your PDF is ready</h2><p style="margin:6px 0 4px;line-height:1.5">Tap below, then choose <b>Save to Files</b>, Mail, or Messages.</p><div class="acts" style="margin-top:22px"><button class="btn" data-a="close">Close</button><button class="btn primary" data-a="pdf-share">Save or share PDF</button></div>`);return}
+  }
+  const u=URL.createObjectURL(file),a=document.createElement('a');a.href=u;a.download=file.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);
+}
+/* ============ STATEMENT ============ */
+let STM={co:'',off:new Set()};
+const stmtInvs=cid=>DB.docs.filter(d=>d.companyId===cid&&d.type==='invoice').map(d=>({d,c:invCalc(d)})).filter(x=>x.c.balance>0.005).sort((a,b)=>a.d.date.localeCompare(b.d.date));
+const stmtSel=cid=>stmtInvs(cid).filter(x=>!STM.off.has(x.d.id));
+function viewStatement(id){
+  const co=coById(id); if(!co)return `<p class="empty">Company not found. <a href="#/">Back</a></p>`;
+  if(STM.co!==id)STM={co:id,off:new Set()};
+  const all=stmtInvs(id);
+  return `<div class="edhead"><a class="back" style="margin:0" href="#/company/${id}">${svg('back',16)}${esc(coName(co))}</a>
+    <span class="t">Statement</span><div class="hint" id="hint"></div><span class="sp"></span>
+    <div class="mtog"><button class="on" data-a="mv" data-v="edit">Choose</button><button data-a="mv" data-v="pv">Preview</button></div>
+    <button class="ibtn primary" data-a="print" aria-label="Download PDF" title="Download PDF">${svg('dl')}</button></div>
+  <div class="editor"><div id="form"><div class="fsec"><h3>Invoices to include</h3>
+    <p class="muted small" style="margin:-4px 0 10px">One page showing everything ${esc(coName(co))} still owes. Updates itself as you record payments.</p>
+    ${all.length?all.map(x=>`<label class="logsel"><input type="checkbox" data-stm="${x.d.id}" ${STM.off.has(x.d.id)?'':'checked'}><span><b>${esc(x.d.number)}</b> · ${fmtLong(x.d.date)} · owes ${money(x.c.balance,2)}<span class="nt">${esc(x.d.title||'')}</span></span></label>`).join(''):'<p class="empty">No unpaid invoices for this company.</p>'}</div></div>
+  <div id="pvwrap"><p class="pvhint">Tap the page to zoom in or out</p><div id="pv"></div></div></div>`;
+}
+function refreshStmt(){const co=coById(route().id);if(!co||!$('#pv'))return;const rows=stmtSel(co.id);
+  $('#pv').innerHTML=stmtPage(co);$('#hint').innerHTML=`<span>Total due <b>${money(sum(rows,x=>x.c.balance),2)}</b></span><span>${rows.length} invoice${rows.length===1?'':'s'}</span>`;fit()}
+function stmtPage(co){
+  const rows=stmtSel(co.id),tot=sum(rows,x=>x.c.balance),billed=sum(rows,x=>x.c.total),paid=sum(rows,x=>x.c.paid);
+  const pb=[...new Set(rows.map(x=>payByOf(x.d)).filter(Boolean))],pay=pb.length===1?pb[0]:(pb.length?'':co.payPref||'');
+  return `<div class="page">${docHead({date:todayStr()},'Statement')}
+  <h1 class="dt">Account Statement</h1>
+  <div class="dsub">For ${esc(coName(co))}</div><div class="dby">${byLine()}</div><hr class="drule">
+  <div class="dcards" style="margin-top:22px">
+   <div class="dcard"><div class="l">Billed to</div><div class="t" style="margin-top:8px"><b>${esc(coName(co))}</b>${co.contact&&co.business?`<br>${esc(co.contact)}`:''}${co.email?`<br>${esc(co.email)}`:''}${co.phone?`<br>${esc(co.phone)}`:''}</div></div>
+   <div class="dcard"><div class="l">Total due</div><div class="v">${money(tot,2)}</div><div class="s">${rows.length} open invoice${rows.length===1?'':'s'}</div></div></div>
+  ${secH('Open invoices')}
+  ${rows.length?`<table class="dtbl"><thead><tr><th>Invoice</th><th class="nw">Issued</th><th class="nw">Due</th><th class="r">Billed</th><th class="r">Paid</th><th class="r">Balance</th></tr></thead><tbody>
+   ${rows.map(x=>`<tr><td><b>${esc(x.d.number)}</b>${x.d.title&&x.d.title!=='Invoice'?`<br><span style="color:var(--soft);font-size:12px">${esc(x.d.title)}</span>`:''}</td><td class="nw">${fmtShort(parseD(x.d.date))}</td><td class="nw">${x.d.dueDate?fmtShort(parseD(x.d.dueDate)):'On receipt'}${x.c.status==='Overdue'?'<br><b style="color:#b3261e;font-size:11px">OVERDUE</b>':''}</td><td class="r">${money(x.c.total,2)}</td><td class="r">${x.c.paid?money(x.c.paid,2):'—'}</td><td class="r">${money(x.c.balance,2)}</td></tr>`).join('')}</tbody></table>`:`<p>${ph('Choose invoices on the left.')}</p>`}
+  <div class="dtot"><div><span>Total billed</span><span>${money(billed,2)}</span></div>${paid?`<div class="pl"><span>Total paid</span><span>−${money(paid,2)}</span></div>`:''}<div class="g"><span>Total due</span><span>${money(tot,2)}</span></div></div>
+  ${pay?secH('Payment info')+`<p><b>Pay by:</b> ${esc(pay)}</p>`:''}
+  </div>`;
+}
+
+function estPage(d,co){
+  const a=estAmount(d), rate=+d.rate||0;
+  let sub=d.pricing==='flat'?'Flat project fee':`${money(rate)}/hour, billed hourly${d.capOn&&+d.cap?`, capped at ${money(d.cap)}`:''}`;
+  const dep=d.depositOn;
+  return `<div class="page">${docHead(d,d.label||'Estimate')}
+  <h1 class="dt">${d.title?esc(d.title):ph('Project title')}</h1>
+  <div class="dsub">${esc(d.label||'Estimate')} for ${esc(coName(co))}</div><div class="dby">${byLine()}</div><hr class="drule">
+  ${d.overview?secH('Overview')+`<p>${nl2br(d.overview)}</p>`:''}
+  ${secH('Rate')}
+  <div class="dcards ${dep?'':'one'}"><div class="dcard"><div class="l">${d.pricing==='flat'?'Project price':'Total project range'}</div><div class="v">${a.value}</div><div class="s">${esc(sub)}</div></div>
+  ${dep?`<div class="dcard"><div class="l">${esc(d.depositLabel||'Deposit')}</div><div class="v">${money(+d.deposit||0)}</div></div>`:''}</div>
+  ${d.billingNote?`<p class="dnote">${nl2br(d.billingNote)}</p>`:''}
+  ${d.steps.some(s=>s.trim())?secH(d.stepsTitle||'Process')+d.steps.filter(s=>s.trim()).map((s,i)=>`<div class="step"><b>${i+1}</b><span>${esc(s)}</span></div>`).join(''):''}
+  </div>`;
+}
+
+function invPage(d,co){
+  const c=invCalc(d); co=co||{};
+  const stamp=c.status==='Paid'?'<span class="stamp">Paid in full</span>':c.status==='Partial'?'<span class="stamp part">Partially paid</span>':'';
+  let work='';
+  const extraRows=d.extras.filter(x=>x.desc||x.amount).map(x=>`<tr><td colspan="${d.mode==='itemized'?2:1}">${esc(x.desc)}</td>${d.mode==='itemized'?'<td class="r"></td>':''}<td class="r">${money(+x.amount||0,2)}</td></tr>`).join('');
+  if(d.mode==='itemized'){
+    work=`<table class="dtbl"><thead><tr><th class="nw">Date</th><th>What I did</th><th class="r">Hours</th><th class="r">Amount</th></tr></thead><tbody>
+      ${c.items.map(i=>`<tr><td class="nw">${new Date(i.log.start).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</td><td>${esc(i.log.notes)}</td><td class="r">${i.hours.toFixed(2)}</td><td class="r">${money(i.amount,2)}</td></tr>`).join('')}
+      ${extraRows.replace(/<td colspan="2">/g,'<td colspan="2">')}</tbody></table>
+      ${c.items.length?`<div class="dnote muted" style="color:var(--soft);font-size:12px">${c.hours.toFixed(2)} hours at ${money(+d.rate||0)}/hour</div>`:''}`;
+    if(!c.items.length&&!extraRows)work=`<p>${ph('Select time entries on the left.')}</p>`;
+  }else{
+    const lines=d.summary.split('\n').map(s=>s.trim()).filter(Boolean);
+    work=(lines.length?lines.map(l=>`<div class="bul"><i></i><span>${esc(l)}</span></div>`).join(''):`<p>${ph('What you worked on will appear here.')}</p>`)+
+      `<table class="dtbl" style="margin-top:14px"><tbody><tr><td>${esc(d.summaryLabel||'Services')}</td><td class="r">${money(c.work,2)}</td></tr>${extraRows}</tbody></table>`;
+  }
+  const dueTxt=d.dueDate?fmtLong(d.dueDate):'Upon receipt';
+  return `<div class="page">${docHead(d,'Invoice '+d.number,stamp)}
+  <h1 class="dt">${esc(d.title||'Invoice')}</h1>
+  <div class="dsub">Invoice for ${esc(coName(co))}</div><div class="dby">${byLine()}</div><hr class="drule">
+  <div class="dcards" style="margin-top:22px">
+   <div class="dcard"><div class="l">Billed to</div><div class="t" style="margin-top:8px"><b>${esc(coName(co))}</b>${co.contact&&co.business?`<br>${esc(co.contact)}`:''}${co.email?`<br>${esc(co.email)}`:''}${co.phone?`<br>${esc(co.phone)}`:''}</div></div>
+   <div class="dcard"><div class="l">Invoice details</div><div class="t" style="margin-top:8px"><b>Invoice #</b> ${esc(d.number)}<br><b>Issued</b> ${fmtLong(d.date)}<br><b>Due</b> ${dueTxt}</div></div></div>
+  ${secH(d.mode==='itemized'?'Work completed':'What I worked on')}${work}
+  <div class="dtot">${(d.extras.length||c.credit)?`<div><span>Subtotal</span><span>${money(c.subtotal,2)}</span></div>`:''}
+   ${c.credit?`<div><span>${esc(d.creditLabel||'Credit')}</span><span>−${money(c.credit,2)}</span></div>`:''}
+   <div class="g"><span>Total</span><span>${money(c.total,2)}</span></div>
+   ${d.payments.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(p=>`<div class="pl"><span>Paid ${new Date(parseD(p.date)).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} · ${esc(p.method)}${p.note?` (${esc(p.note)})`:''}</span><span>−${money(p.amount,2)}</span></div>`).join('')}
+   ${d.payments.length?`<div class="g bd"><span>${c.balance>0?'Balance due':'Balance'}</span><span>${money(Math.max(0,c.balance),2)}</span></div>`:''}</div>
+  <div class="dcards" style="margin-top:22px"><div class="dcard"><div class="l">Total</div><div class="v">${money(c.total,2)}</div>${c.paid?`<div class="s">${money(c.paid,2)} received</div>`:''}</div>
+   <div class="dcard"><div class="l">${c.status==='Paid'?'Status':'Balance due'}</div><div class="v">${c.status==='Paid'?'Paid in full':money(c.balance,2)}</div>${c.status==='Paid'?'<div class="s">Thank you!</div>':d.dueDate?`<div class="s">Due ${fmtLong(d.dueDate)}</div>`:''}</div></div>
+  ${(d.notes.trim()||(payByOf(d)&&d.showPayBy!==false))?secH('Payment info')+(payByOf(d)&&d.showPayBy!==false?`<p><b>Pay by:</b> ${esc(payByOf(d))}</p>`:'')+(d.notes.trim()?`<p>${nl2br(d.notes)}</p>`:''):''}
+  </div>`;
+}
+
+/* ============ SETTINGS ============ */
+function viewSettings(){
+  const m=DB.me;
+  return `<h1 style="font-size:36px;font-weight:800;margin-bottom:18px">My info</h1><div class="cols">
+  <div class="card"><h3>Shows on estimates &amp; invoices</h3>
+   <div class="g2"><label>Your name<input data-me="name" value="${esc(m.name)}"></label><label>Business<input data-me="business" value="${esc(m.business)}"></label>
+   <label>Email<input data-me="email" value="${esc(m.email)}"></label><label>Phone<input data-me="phone" value="${esc(m.phone)}"></label></div>
+   <label>Default payment instructions <small>(pre-filled on every new invoice)</small><textarea data-me="pay" rows="4" placeholder="e.g. Zelle to …, checks payable to …">${esc(m.pay)}</textarea></label></div>
+  <div class="card"><h3>App</h3><p class="muted small" style="margin-top:0">Version ${APP_VERSION} (${APP_DATE}). If something looks out of date on your phone, refresh to load the newest version and your latest saved data.</p>
+   <button class="btn primary" data-a="refresh">${svg('refresh',16)}Refresh app</button></div>
+  <div class="card"><h3>About</h3><p class="muted small" style="margin-top:0">${esc(BRAND.appName)} is a simple time tracker with estimates, invoices and statements. Designed by <a href="${esc(BRAND.credit.url)}" target="_blank" rel="noopener">${esc(BRAND.credit.name)}</a>.</p>${DB.demo?'<p class="muted small">You’re looking at sample data.</p><button class="btn danger" data-a="reset-all">Erase sample data and start fresh</button>':''}</div>
+  <div class="card"><h3>Back up your data</h3><p class="muted small" style="margin-top:0">Everything is stored in this browser on this computer. Download a backup now and then — and use it to move to another computer.</p>
+   <div class="row"><button class="btn primary" data-a="export">${svg('dl',16)}Download backup</button><label class="btn" style="margin:0;cursor:pointer;text-transform:none;letter-spacing:0;font-size:14px;color:var(--accent-deep)">${svg('ul',16)}Restore backup<input type="file" accept=".json" id="imp" hidden></label></div></div></div>`;
+}
+
+
+/* ============ sample data ============ */
+function demoData(){
+  const now=new Date(),dayD=n=>new Date(now.getFullYear(),now.getMonth(),now.getDate()-n);
+  const at=(n,h)=>{const d=dayD(n);d.setHours(h,0,0,0);return d.getTime()};
+  const ymd=n=>{const d=dayD(n);return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};
+  const cos=[
+    {id:'demo-c1',business:'Juniper & Finch Studio',contact:'Maya Finch',phone:'(555) 010-2214',email:'maya@juniperfinch.example',rate:85,payPref:'Zelle'},
+    {id:'demo-c2',business:'Northlight Coffee Co.',contact:'Dev Patel',phone:'(555) 010-7781',email:'dev@northlight.example',rate:70,payPref:'Check'},
+    {id:'demo-c3',business:'Bramble Bakery',contact:'Sam Ortiz',phone:'(555) 010-3390',email:'sam@bramble.example',rate:65,payPref:'Credit card'}];
+  const rows=[['c1',26,9,150,'Brand discovery workshop'],['c1',25,10,180,'Moodboards and logo sketches'],['c1',23,9,120,'Logo refinements, color palette'],
+    ['c1',10,13,90,'Packaging dieline layout'],['c1',9,10,165,'Packaging illustrations'],['c1',3,9,135,'Packaging revisions after feedback'],
+    ['c2',17,9,120,'Menu board concepts'],['c2',16,11,150,'Menu board final artwork'],['c2',15,14,60,'Print-ready files and handoff'],['c2',2,10,90,'Social post templates'],
+    ['c3',6,10,105,'Website wireframes'],['c3',5,9,180,'Homepage design, desktop and mobile']];
+  const logs=rows.map((r,i)=>({id:'demo-l'+i,companyId:'demo-'+r[0],start:at(r[1],r[2]),end:at(r[1],r[2])+r[3]*60000,notes:r[4]}));
+  DB.companies=cos;DB.logs=logs;DB.docs=[];DB.seq={inv:1,est:1};DB.demo=true;
+  DB.me={name:'Alex Rivera',business:'Rivera Design Studio',email:'alex@riveradesign.example',phone:'(555) 010-0000',pay:'Zelle to alex@riveradesign.example, or checks payable to Rivera Design Studio.'};
+  const mk=(co,ids,dn,due,pay)=>{const c=cos.find(x=>x.id===co);
+    const d={id:uid(),type:'invoice',companyId:co,number:nextNum('invoice'),created:dayD(dn).getTime(),date:ymd(dn),dueDate:ymd(dn-due),title:'Invoice',logIds:ids,mode:'itemized',round:'0',rate:c.rate,
+      summary:'',summaryEdited:false,summaryLabel:'Professional services',amountOverride:'',extras:[],credit:'',creditLabel:'Deposit received',notes:DB.me.pay,payBy:c.payPref,showPayBy:true,payments:[]};
+    d.summary=draftSummary(ids);const tot=invCalc(d).total;
+    if(pay==='full')d.payments.push({id:uid(),amount:tot,date:ymd(dn-6),method:c.payPref,note:''});
+    if(pay==='half')d.payments.push({id:uid(),amount:Math.round(tot/2),date:ymd(dn-4),method:c.payPref,note:'Deposit'});
+    DB.docs.push(d)};
+  mk('demo-c1',['demo-l0','demo-l1','demo-l2'],20,14,'full');
+  mk('demo-c1',['demo-l3','demo-l4'],4,14,'half');
+  mk('demo-c2',['demo-l6','demo-l7','demo-l8'],12,14,'');
+  DB.docs.push({id:uid(),type:'estimate',companyId:'demo-c3',number:nextNum('estimate'),created:dayD(3).getTime(),date:ymd(3),status:'Sent',label:'Project Proposal',title:'Bramble Bakery website',
+    overview:'A friendly, easy-to-update website for Bramble Bakery: home, menu, ordering info and contact.',pricing:'range',rate:65,hoursLo:28,hoursHi:36,flat:'',capOn:false,cap:'',depositOn:true,deposit:500,depositLabel:'Deposit to begin',
+    billingNote:'Invoicing occurs in increments as milestones are completed.',stepsTitle:'Process',steps:['Wireframes and sitemap','Visual design','Build and launch']});
+  save();
+}
+
+/* ============ EVENTS ============ */
+document.addEventListener('click',e=>{
+  if(e.target.closest('#pv')&&matchMedia('(max-width:1000px)').matches){PVZ=!PVZ;fit();return}
+  const el=e.target.closest('[data-a]'); if(!el)return;
+  const a=el.dataset.a, id=el.dataset.id;
+  if(a==='scrim'){if(e.target===el)closeModal();return}
+  const d=route().name==='doc'?curDoc():null;
+  switch(a){
+    case 'close':closeModal();break;
+    case 'cf-no':confirmNo();break;
+    case 'cf-yes':{const f=CF&&CF.fn;closeModal();if(f)f();break}
+    case 'pvz':PVZ=!PVZ;fit();break;
+    case 'toast-act':if(toast.fn)toast.fn();$('#toast').hidden=true;break;
+    case 'refresh':if(dirty||pushing){toast('Saving first…');push().finally(()=>location.reload())}else location.reload();break;
+    case 'mv':$('.editor').classList.toggle('pvon',el.dataset.v==='pv');$$('.mtog button').forEach(b=>b.classList.toggle('on',b===el));fit();window.scrollTo(0,0);break;
+    case 'load-demo':demoData();toast('Sample data added');render(true);break;
+    case 'reset-all':confirmBox({title:'Remove all sample data?',body:'Everything in this browser will be erased, including anything you added. Download a backup first if you want to keep it.',ok:'Erase everything',destroy:true,fn:()=>{DB=normalize(null);save();closeModal();go('');render(true);toast('Started fresh')}});break;
+    case 'new-co':companyModal(null,el.dataset.name);break;
+    case 'open-co':go('company/'+id);break;
+    case 'edit-co':companyModal(id);break;
+    case 'save-co':{
+      const v=k=>$('#m_'+k).value.trim();
+      const o={business:v('business'),contact:v('contact'),phone:v('phone'),email:v('email'),rate:v('rate')===''?'':+v('rate'),payPref:$('#m_pay').value};
+      let cid=id;
+      if(id)Object.assign(coById(id),o);else{cid=uid();DB.companies.push({id:cid,...o})}
+      save();closeModal();if(!id)go('company/'+cid);else render(true);break}
+    case 'del-co':{
+      const co=coById(id),nl=DB.logs.filter(l=>l.companyId===id).length,nd=DB.docs.filter(x=>x.companyId===id).length;
+      confirmBox({title:'Delete this company?',body:`${coName(co)} and its ${nl} time ${nl===1?'entry':'entries'} and ${nd} estimate${nd===1?'':'s'}/invoice${nd===1?'':'s'} will be permanently deleted. This can’t be undone.`,ok:'Delete company',destroy:1,fn:()=>{
+        DB.companies=DB.companies.filter(c=>c.id!==id);DB.logs=DB.logs.filter(l=>l.companyId!==id);DB.docs=DB.docs.filter(x=>x.companyId!==id);
+        save();go('');render(true)}});break}
+    case 'toggle':{const t=$('#'+el.dataset.target);t.hidden=!t.hidden;break}
+    case 'in-now':case 'in-at':{
+      const cid=route().id; let st=Date.now();
+      if(a==='in-at'){st=fromLocalInput($('#inatv').value);if(isNaN(st))return ferr($('#inatv'),'Pick a start time.');if(st>Date.now()+60000)return ferr($('#inatv'),'Start time can’t be in the future.')}
+      DB.logs.push({id:uid(),companyId:cid,start:st,end:null,notes:''});save();toast('Clocked in');render(true);break}
+    case 'out-now':finishLog(DB.logs.find(l=>!l.end&&l.companyId===route().id),Date.now());break;
+    case 'out-at':finishLog(DB.logs.find(l=>!l.end&&l.companyId===route().id),fromLocalInput($('#outatv').value),$('#outatv'));break;
+    case 'discard':confirmBox({title:'Discard this session?',body:'The time you’ve tracked and any notes will be deleted. This can’t be undone.',ok:'Discard session',destroy:1,fn:()=>{DB.logs=DB.logs.filter(l=>l.id!==id);save();render(true)}});break;
+    case 'add-log':logModal(null,el.dataset.co||route().id);break;
+    case 'edit-log':logModal(id);break;
+    case 'save-log':{
+      const start=fromLocalInput($('#m_start').value),endv=$('#m_end').value,end=endv?fromLocalInput(endv):null,notes=$('#m_notes').value.trim();
+      if(isNaN(start))return ferr($('#m_start'),'Pick a start time.');
+      if(end!==null&&(isNaN(end)||end<=start))return ferr($('#m_end'),'End must be after the start time.');
+      if(end!==null&&!notes)return ferr($('#m_notes'),'Add notes about what you did.');
+      const o={companyId:$('#m_co').value,start,end,notes};
+      if(id)Object.assign(DB.logs.find(l=>l.id===id),o);else DB.logs.push({id:uid(),...o});
+      save();closeModal();render(true);break}
+    case 'del-log':{
+      const b=billedBy(id);
+      confirmBox({title:'Delete this time entry?',body:b?`This entry is on invoice ${b.number}. Deleting it removes it from that invoice too. This can’t be undone.`:'This can’t be undone.',ok:'Delete entry',destroy:1,fn:()=>{
+        DB.logs=DB.logs.filter(l=>l.id!==id);DB.docs.forEach(x=>{if(x.logIds)x.logIds=x.logIds.filter(i=>i!==id)});save();render(true)}});break}
+    case 'docf':DF=el.dataset.k;render(true);break;
+    case 'pick-co':pickCompany(el.dataset.type);break;
+    case 'new-doc':newDoc(el.dataset.type,el.dataset.co);break;
+    case 'open-doc':go('doc/'+id);break;
+    case 'open-stmt':go('statement/'+id);break;
+    case 'dup-doc':confirmBox({title:`Duplicate this ${d.type}?`,body:`A copy of ${d.type} ${d.number} will be created${d.type==='invoice'?' without its payments or linked time entries':' as a draft'}.`,ok:'Duplicate',fn:()=>{
+      const c=JSON.parse(JSON.stringify(d));c.id=uid();c.number=nextNum(d.type);c.created=Date.now();c.date=todayStr();
+      if(c.type==='invoice'){c.payments=[];c.logIds=[]}else c.status='Draft';
+      DB.docs.push(c);save();go('doc/'+c.id);toast('Duplicated')}});break;
+    case 'del-doc':confirmBox({title:`Delete this ${d.type}?`,body:`${d.type==='invoice'?'Invoice':'Estimate'} ${d.number}${d.type==='invoice'&&d.payments&&d.payments.length?` and its ${d.payments.length} recorded payment${d.payments.length===1?'':'s'}`:''} will be permanently deleted. This can’t be undone.`,ok:`Delete ${d.type}`,destroy:1,fn:()=>{DB.docs=DB.docs.filter(x=>x.id!==d.id);save();go('company/'+d.companyId)}});break;
+    case 'print':{
+      const stm=route().name==='statement',sco=stm?coById(route().id):null;
+      const t=document.title;document.title=stm?`${bizName()} - Statement - ${coName(sco)}`:`${bizName()} - ${d.type==='invoice'?'Invoice':'Estimate'} ${d.number} - ${coName(coById(d.companyId))}`;
+      if(matchMedia('(pointer:coarse)').matches||navigator.standalone){
+        clearErr();toast('Making your PDF…');const nm=document.title;
+        makePDF(stm?stmtPage(sco):(d.type==='invoice'?invPage(d,coById(d.companyId)):estPage(d,coById(d.companyId))),nm).then(f=>{document.title=t;return deliverPDF(f)}).catch(()=>{document.title=t;ferr($('.edhead'),'Couldn’t make the PDF. Check your connection and try again.')});break}
+      toast('In the window that opens, set Destination to “Save as PDF”');setTimeout(()=>{window.print();setTimeout(()=>document.title=t,500)},900);break}
+    case 'pdf-share':if(PDFF)navigator.share({files:[PDFF],title:PDFF.name}).then(closeModal).catch(err=>{if(err.name!=='AbortError')closeModal()});break;
+    case 'step-add':d.steps.push('');save();viewRerender(`[data-step="${d.steps.length-1}"]`);break;
+    case 'step-del':{const i=+el.dataset.i;d.steps.splice(i,1);if(!d.steps.length)d.steps=[''];save();viewRerender();break}
+    case 'step-up':case 'step-dn':{const i=+el.dataset.i,j=a==='step-up'?i-1:i+1;[d.steps[i],d.steps[j]]=[d.steps[j],d.steps[i]];save();viewRerender();break}
+    case 'sel-all':case 'sel-none':{
+      const ids=$$('[data-logsel]').map(x=>x.dataset.logsel);d.logIds=a==='sel-all'?ids:[];save();syncLogSel(d);break}
+    case 'redraft':d.summary=draftSummary(d.logIds);d.summaryEdited=false;save();$('[data-f=summary]').value=d.summary;refreshDoc();toast('Redrafted from your notes');break;
+    case 'ex-add':d.extras.push({desc:'',amount:''});save();viewRerender(`[data-exi="${d.extras.length-1}"]`);break;
+    case 'ex-del':d.extras.splice(+el.dataset.i,1);save();viewRerender();break;
+    case 'pay-add':{
+      const amt=+$('#p_amt').value,date=$('#p_date').value;
+      if(!(amt>0))return ferr($('#p_amt'),'Enter the amount paid.');if(!date)return ferr($('#p_date'),'Pick the date paid.');
+      const bal=invCalc(d).balance;
+      const doPay=()=>{d.payments.push({id:uid(),amount:amt,date,method:$('#p_how').value,note:$('#p_note').value.trim()});save();viewRerender();toast('Payment recorded')};
+      if(amt>bal+0.005)confirmBox({title:'Record this payment anyway?',body:bal>0?`That’s more than the ${money(bal,2)} still owed.`:'This invoice is already paid in full.',ok:'Record payment',fn:doPay});else doPay();break}
+    case 'pay-del':{const pm=d.payments.find(p=>p.id===id);confirmBox({title:'Remove this payment?',body:`${pm?money(pm.amount,2)+' paid '+pm.date+' will be removed and the balance due goes back up. ':''}This can’t be undone.`,ok:'Remove payment',destroy:1,fn:()=>{d.payments=d.payments.filter(p=>p.id!==id);save();viewRerender()}});break}
+    case 'export':{
+      const b=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),x=document.createElement('a');
+      x.href=u;x.download=`designer-hours-backup-${todayStr()}.json`;x.click();setTimeout(()=>URL.revokeObjectURL(u),1000);break}
+  }
+});
+function viewRerender(focus){render(true);if(focus){const f=$(focus);if(f)f.focus()}}
+function syncLogSel(d){
+  $$('[data-logsel]').forEach(x=>x.checked=d.logIds.includes(x.dataset.logsel));
+  if(!d.summaryEdited){d.summary=draftSummary(d.logIds);save();const ta=$('[data-f=summary]');if(ta)ta.value=d.summary}
+  refreshDoc();
+}
+function setField(t,d){
+  const f=t.dataset.f;let v=t.type==='checkbox'?t.checked:t.value;
+  if(t.dataset.n)v=v===''?'':+v;
+  d[f]=v; if(f==='summary')d.summaryEdited=true;
+  if(f==='payBy'&&v&&$('#p_how'))$('#p_how').value=v;
+  save(); if(STRUCT.has(f))viewRerender();else refreshDoc();
+}
+function onEdit(e,isChange){
+  const t=e.target, d=route().name==='doc'?curDoc():null;
+  const kind=t.type, instant=(kind==='checkbox'||kind==='radio'||t.tagName==='SELECT'||kind==='date'||kind==='datetime-local'||kind==='file');
+  if(instant!==isChange)return;
+  if(t.dataset.stm!==undefined){t.checked?STM.off.delete(t.dataset.stm):STM.off.add(t.dataset.stm);return refreshStmt()}
+  if(t.dataset.f!==undefined&&d)return setField(t,d);
+  if(t.dataset.step!==undefined&&d){d.steps[+t.dataset.step]=t.value;save();return refreshDoc()}
+  if(t.dataset.exi!==undefined&&d){const x=d.extras[+t.dataset.exi];x[t.dataset.exk]=t.dataset.exk==='amount'?(t.value===''?'':+t.value):t.value;save();return refreshDoc()}
+  if(t.dataset.logsel!==undefined&&d){const s=new Set(d.logIds);t.checked?s.add(t.dataset.logsel):s.delete(t.dataset.logsel);d.logIds=[...s];save();return syncLogSel(d)}
+  if(t.dataset.me){DB.me[t.dataset.me]=t.value;save();return}
+  if(t.dataset.corate){coById(t.dataset.corate).rate=t.value===''?'':+t.value;save();return}
+  if(t.dataset.lf!==undefined){LF[t.dataset.lf]=t.value;$('#logres').innerHTML=logRes();return}
+  if(t.id==='q')return void($('#colist').innerHTML=coList(t.value));
+  if(t.id==='pq')return void($('#pl').innerHTML=pickList($('#pl').firstElementChild?.dataset.type||'invoice',t.value));
+  if(t.id==='tknotes'){
+    const run=DB.logs.find(l=>!l.end&&l.companyId===route().id);if(!run)return;
+    run.notes=t.value;save();const ok=!!t.value.trim();
+    $$('[data-gate]').forEach(b=>b.disabled=!ok);$('#tkhelp').hidden=ok;
+  }
+}
+document.addEventListener('input',e=>onEdit(e,false));
+document.addEventListener('change',e=>{onEdit(e,true);
+  if(e.target.id==='imp'){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(r.result);if(!j.companies||!j.logs)throw 0;confirmBox({title:'Restore this backup?',body:'Everything currently in the app will be replaced with the contents of the backup file. This can’t be undone.',ok:'Restore backup',destroy:1,fn:()=>{DB=j;save();load();toast('Backup restored');go('')}});e.target.value='';return}catch(x){ferr(e.target,'That file doesn’t look like a backup. Choose the file you exported from this app.')}};r.readAsText(f)}});
+document.addEventListener('keydown',e=>{
+  const t=e.target;if(t.dataset.step===undefined)return;const d=curDoc(),i=+t.dataset.step;
+  if(e.key==='Enter'){e.preventDefault();d.steps.splice(i+1,0,'');save();viewRerender(`[data-step="${i+1}"]`)}
+  else if(e.key==='Backspace'&&t.value===''&&d.steps.length>1){e.preventDefault();d.steps.splice(i,1);save();viewRerender(`[data-step="${Math.max(0,i-1)}"]`)}
+});
+
+boot();
+</script>
+</body>
+</html>
