@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+.wrangler/
+.dev.vars
+*.token
+cloudflare-token*
+backups/
+*-backup-*.json
